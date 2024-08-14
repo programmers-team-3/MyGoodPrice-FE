@@ -1,6 +1,14 @@
-import { RouterProvider } from 'react-router-dom';
-import { router } from './routes/router';
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/router";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme";
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </>
+  );
 }
