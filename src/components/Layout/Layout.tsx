@@ -1,8 +1,8 @@
-import { Outlet } from "react-router-dom";
-import styled from "styled-components";
+import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
 
-import Navbar from "../Common/Navbar";
-import Header from "../Common/Header";
+import Navbar from '../Common/Navbar';
+import Header from '../Common/Header';
 
 const Layout = () => {
   return (
@@ -45,8 +45,10 @@ const StyledHeader = styled(Header)`
 const Content = styled.div`
   flex: 1; // 남은 공간을 차지하도록 설정
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+  padding: 0;
 `;
 
 const StyledNavbar = styled(Navbar)`
