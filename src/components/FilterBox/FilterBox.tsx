@@ -1,5 +1,5 @@
-import { Range, getTrackBackground } from 'react-range';
-import { useState } from 'react';
+import { Range, getTrackBackground } from "react-range";
+import { useState } from "react";
 
 const STEP = 100;
 const MIN = 0;
@@ -10,7 +10,7 @@ export default function FilterBox({ rtl }: { rtl: boolean }) {
 
   const handleChange = (idx: number, value: string) => {
     if (idx === 1 && Number(value) < values[0]) return;
-    if (idx === 0 && Number(value) < values[1]) return;
+    if (idx === 0 && Number(value) > values[1]) return;
     const updatedValues = [...values];
     updatedValues[idx] = Number(value);
     setValues(updatedValues);
@@ -36,17 +36,17 @@ export default function FilterBox({ rtl }: { rtl: boolean }) {
               <div
                 ref={props.ref}
                 style={{
-                  height: '5px',
-                  width: '100%',
-                  borderRadius: '4px',
+                  height: "4px",
+                  width: "100%",
+                  borderRadius: "4px",
                   background: getTrackBackground({
                     values,
-                    colors: ['#ccc', '#548BF4', '#ccc'],
+                    colors: ["#ccc", "#548BF4", "#ccc"],
                     min: MIN,
                     max: MAX,
                     rtl,
                   }),
-                  alignSelf: 'center',
+                  alignSelf: "center",
                 }}
               >
                 {children}
@@ -57,7 +57,7 @@ export default function FilterBox({ rtl }: { rtl: boolean }) {
             <div
               {...props}
               key={props.key}
-              className="h-12 w-12 rounded-full bg-mainDarkColor"
+              className="h-6 w-6 rounded-full bg-mainDarkColor"
             ></div>
           )}
         />

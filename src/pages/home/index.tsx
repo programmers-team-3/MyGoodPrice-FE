@@ -1,38 +1,38 @@
-import Button from '@/components/Button/Button';
-import SearchBar from '@/components/SearchBar/SearchBar';
-import StoreOverview from '@/components/Overview/StoreOverview';
-import { IoFilter } from 'react-icons/io5';
-import { useState } from 'react';
-import Modal from '@/components/Modal/Modal';
-import FilterBox from '@/components/FilterBox/FilterBox';
+import Button from "@/components/Button/Button";
+import SearchBar from "@/components/SearchBar/SearchBar";
+import StoreOverview from "@/components/Overview/StoreOverview";
+import { IoFilter } from "react-icons/io5";
+import { useState } from "react";
+import Modal from "@/components/Layout/ModalLayout";
+import FilterBox from "@/components/FilterBox/FilterBox";
 
 const dummyFoodFilterData = [
   {
     id: 1,
-    name: '한식',
+    name: "한식",
   },
   {
     id: 2,
-    name: '중식',
+    name: "중식",
   },
   {
     id: 3,
-    name: '양식',
+    name: "양식",
   },
   {
     id: 4,
-    name: '일식',
+    name: "일식",
   },
 ];
-export default function HomePage() {
+export default function Home() {
   const [current, setCurrent] = useState<number>(1);
-  const [input, setInput] = useState<string>('');
+  const [input, setInput] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
 
   return (
     <div
       className={`h-full flex flex-col gap-2 transition duration-300
-      overflow-hidden ${open && 'opacity-40'}`}
+      overflow-hidden ${open && "opacity-40 blur-xs"}`}
     >
       <div className="flex gap-8 m-4 justify-center items-center">
         {/* <Button isActive={true} size={'small'} name={'Category'} /> */}
@@ -42,7 +42,7 @@ export default function HomePage() {
               <Button
                 key={data.id}
                 isActive={current === data.id}
-                size={'medium'}
+                size={"medium"}
                 name={data.name}
                 handleSetCurrent={() => setCurrent(data.id)}
               />

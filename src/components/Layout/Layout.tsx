@@ -1,8 +1,8 @@
-import { Outlet } from 'react-router-dom';
-import styled from 'styled-components';
+import { Outlet } from "react-router-dom";
+import styled from "styled-components";
 
-import Navbar from '../Common/Navbar';
-import Header from '../Common/Header';
+import Navbar from "../Common/Navbar";
+import Header from "../Common/Header";
 
 const Layout = () => {
   return (
