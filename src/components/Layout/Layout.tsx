@@ -45,8 +45,10 @@ const StyledHeader = styled(Header)`
 const Content = styled.div`
   flex: 1; // 남은 공간을 차지하도록 설정
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+  padding: 0;
 `;
 
 const StyledNavbar = styled(Navbar)`
