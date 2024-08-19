@@ -1,26 +1,21 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "es2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
+    "module": "ESNext", // ES 모듈 사용
     "skipLibCheck": true,
     "types": ["vite/client", "vite-plugin-svgr/client"],
-    /*url*/
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     },
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-
-    /* Linting */
+    "jsx": "react-jsx", // React 17 이상일 경우
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
