@@ -32,23 +32,23 @@ const LayoutStyle = styled.div`
   position: relative;
 
   @media (max-width: 768px) {
-    // 화면 너비가 768px 이하일 경우
-    width: 100%; // 모바일 뷰에서는 너비를 100%로 설정
+    width: 100%;
   }
 `;
 const StyledHeader = styled(Header)`
-  position: absolute; // 절대 위치 설정
-  top: 0; // 상단 고정
-  width: 100%; // 너비를 100%로 설정
+  position: absolute;
+  top: 0;
+  width: 100%;
 `;
 
 const Content = styled.div`
-  flex: 1; // 남은 공간을 차지하도록 설정
+  flex: 1;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   padding: 0;
+  width: 100%;
 `;
 
 const StyledNavbar = styled(Navbar)`

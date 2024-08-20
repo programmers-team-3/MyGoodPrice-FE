@@ -2,9 +2,12 @@
   "compilerOptions": {
     "composite": true,
     "skipLibCheck": true,
-    "module": "ESNext",
+    "module": "ESNext", // ESNext 모듈 사용
     "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react-jsx", // React 17 이상일 경우
+    "target": "es2020", // ES2020 타겟 설정
+    "lib": ["ES2020", "DOM"] // 필요한 라이브러리 추가
   },
   "include": ["vite.config.ts"]
 }
