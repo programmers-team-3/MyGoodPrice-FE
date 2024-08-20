@@ -23,6 +23,10 @@ const dummyFoodFilterData = [
     id: 4,
     name: "일식",
   },
+  {
+    id: 5,
+    name: "기타",
+  },
 ];
 export default function Home() {
   const [current, setCurrent] = useState<number>(1);
@@ -31,12 +35,12 @@ export default function Home() {
 
   return (
     <div
-      className={`h-full flex flex-col gap-2 transition duration-300
-      overflow-hidden ${open && "opacity-40 blur-xs"}`}
+      className={`h-full w-full flex flex-col gap-4 transition duration-300
+      overflow-hidden ${open && "opacity-40 blur-xs"} py-4 m-4 self-center
+      justify-start`}
     >
-      <div className="flex gap-8 m-4 justify-center items-center">
-        {/* <Button isActive={true} size={'small'} name={'Category'} /> */}
-        <div className="flex gap-4">
+      <div className="flex gap-8 justify-between items-center">
+        <div className="flex gap-4 overflow-x-scroll">
           {dummyFoodFilterData.map((data) => {
             return (
               <Button
