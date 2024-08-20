@@ -8,6 +8,7 @@ declare global {
 
 const KakaoMap = () => {
   const mapRef = useRef<any>(null);
+  const overlayRef = useRef<any>(null);
 
   useEffect(() => {
     const initMap = () => {
@@ -44,15 +45,19 @@ const KakaoMap = () => {
             });
             marker.setMap(mapRef.current);
 
-            // 인포윈도우 생성 > 추후 커스텀 오버레이로 수정
-            const infowindow = new window.kakao.maps.InfoWindow({
-              content: `
-                <span class=" block w-28 p-2 bg-white border border-gray-300 rounded-lg text-center ">
-                  현재 위치
-                </span>
-              `,
+            // Custom Overlay 생성
+            const customOverlayContent = `
+              <div class="bg-bgColor text-mainColor border-2 border-mainColor h-8 rounded-xl p-1 mx-auto flex items-center justify-center">
+                현재 위치
+              </div>
+            `;
+
+            overlayRef.current = new window.kakao.maps.CustomOverlay({
+              position: currentPosition,
+              content: customOverlayContent,
+              yAnchor: -0.5,
             });
-            infowindow.open(mapRef.current, marker);
+            overlayRef.current.setMap(mapRef.current);
           },
 
           (error) => {
