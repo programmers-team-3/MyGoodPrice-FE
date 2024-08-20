@@ -1,391 +1,404 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment } from "react";
+import { ShopTypes } from "@/types";
 const dummyData = [
   {
     id: 1,
-    shopName: '눈나무집',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 삼청로 136-1',
-    tel: '02-739-6742',
-    category: '한식',
+    shopName: "눈나무집",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 삼청로 136-1",
+    tel: "02-739-6742",
+    category: "한식",
     menu: [
       {
         id: 1,
-        menu: '김치말이국수',
+        menu: "김치말이국수",
         price: 6500,
       },
       {
         id: 2,
-        menu: '김치볶음밥',
+        menu: "김치볶음밥",
         price: 6500,
       },
     ],
   },
   {
     id: 2,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 3,
-    shopName: '먹고갈래지고갈래',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 수표로 117 (낙원동)',
-    tel: '02-367-1239',
-    category: '한식',
+    shopName: "먹고갈래지고갈래",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 수표로 117 (낙원동)",
+    tel: "02-367-1239",
+    category: "한식",
     menu: [
       {
         id: 1,
-        menu: '삼계탕',
+        menu: "삼계탕",
         price: 13000,
       },
       {
         id: 2,
-        menu: '산채비빔밥',
+        menu: "산채비빔밥",
         price: 7000,
       },
     ],
   },
   {
     id: 4,
-    shopName: '눈나무집',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 삼청로 136-1',
-    tel: '02-739-6742',
-    category: '한식',
+    shopName: "눈나무집",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 삼청로 136-1",
+    tel: "02-739-6742",
+    category: "한식",
     menu: [
       {
         id: 1,
-        menu: '김치말이국수',
+        menu: "김치말이국수",
         price: 6500,
       },
       {
         id: 2,
-        menu: '김치볶음밥',
+        menu: "김치볶음밥",
         price: 6500,
       },
     ],
   },
   {
     id: 5,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 6,
-    shopName: '먹고갈래지고갈래',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 수표로 117 (낙원동)',
-    tel: '02-367-1239',
-    category: '한식',
+    shopName: "먹고갈래지고갈래",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 수표로 117 (낙원동)",
+    tel: "02-367-1239",
+    category: "한식",
     menu: [
       {
         id: 1,
-        menu: '삼계탕',
+        menu: "삼계탕",
         price: 13000,
       },
       {
         id: 2,
-        menu: '산채비빔밥',
+        menu: "산채비빔밥",
         price: 7000,
       },
     ],
   },
   {
     id: 7,
-    shopName: '눈나무집',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 삼청로 136-1',
-    tel: '02-739-6742',
-    category: '한식',
+    shopName: "눈나무집",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 삼청로 136-1",
+    tel: "02-739-6742",
+    category: "한식",
     menu: [
       {
         id: 1,
-        menu: '김치말이국수',
+        menu: "김치말이국수",
         price: 6500,
       },
       {
         id: 2,
-        menu: '김치볶음밥',
+        menu: "김치볶음밥",
         price: 6500,
       },
     ],
   },
   {
     id: 8,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 9,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 10,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 11,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 12,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 13,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 14,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 15,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 16,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 17,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 18,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
   {
     id: 19,
-    shopName: '대륙',
-    region: '서울특별시 종로구',
-    address: '서울특별시 종로구 종로 125 (종로3가) 1~2층',
-    tel: '02-766-8411	',
-    category: '중식',
+    shopName: "대륙",
+    region: "서울특별시 종로구",
+    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
+    tel: "02-766-8411	",
+    category: "중식",
     menu: [
       {
         id: 1,
-        menu: '짜장면',
+        menu: "짜장면",
         price: 7000,
       },
       {
         id: 2,
-        menu: '짬뽕',
+        menu: "짬뽕",
         price: 8000,
       },
     ],
   },
 ];
-export default function StoreOverview() {
+
+type StoreOverviewProps = {
+  tableSize?: number;
+  data?: ShopTypes[];
+  attribute?: string[];
+};
+export default function StoreOverview({
+  tableSize = 4,
+  data = dummyData,
+  attribute = ["Shop Name", "Region", "Category", "Review"],
+}: StoreOverviewProps) {
   const [current, setCurrent] = useState<number | null>(null);
 
   const toggleCurrent = (id: number) => {
     setCurrent(id === current ? null : id);
+
+    // handle filtering category api 필요
   };
 
   const handleGoReview = (id: number) => {
@@ -399,14 +412,15 @@ export default function StoreOverview() {
         <table className="min-w-full bg-white border border-subDarkColor">
           <thead>
             <tr className="text-mainColor bg-mainBrighterColor">
-              <th className="py-2 px-4 border-b">Shop Name</th>
-              <th className="py-2 px-4 border-b">Region</th>
-              <th className="py-2 px-4 border-b">Category</th>
-              <th className="py-2 px-4 border-b">Review</th>
+              {attribute.map((title, idx) => (
+                <th key={idx} className="py-2 px-4 border-b">
+                  {title}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {dummyData.map((shop) => (
+            {data.map((shop) => (
               <Fragment key={shop.id}>
                 <tr
                   className="cursor-pointer hover:bg-mainBrightColor"
@@ -425,7 +439,7 @@ export default function StoreOverview() {
                 {current === shop.id && (
                   <tr>
                     <td
-                      colSpan={4}
+                      colSpan={tableSize}
                       className="py-2 px-4 border-b bg-mainBrighterColor"
                     >
                       <div>
