@@ -45,7 +45,7 @@ const Content = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   overflow: hidden;
   padding: 0;
   width: 100%;
