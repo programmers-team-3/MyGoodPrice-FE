@@ -47,7 +47,7 @@ const KakaoMap = () => {
 
             // Custom Overlay 생성
             const customOverlayContent = `
-              <div class="bg-bgColor text-mainColor border-2 border-mainColor h-8 rounded-xl p-1 mx-auto flex items-center justify-center">
+              <div class="bg-mainBrightColor text-mainColor border-2 border-mainColor h-8 rounded-xl p-1 mx-auto flex items-center justify-center">
                 현재 위치
               </div>
             `;

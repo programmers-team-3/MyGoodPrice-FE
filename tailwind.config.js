@@ -4,13 +4,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        bgColor: "#EDEFF4",
-        mainColor: "#366CF0",
         mainDarkColor: "#0B52A9",
-        mainBrightColor: "#EDEFF4", // bgColor와 동일
+        mainColor: "#366CF0",
+
+        mainBrightColor: "#EDEFF4",
         mainBrighterColor: "#F5F6F9",
+
         subColor: "#CDCED1",
         subDarkColor: "#A5A6A9",
+      },
+      margin: {
+        header: "8vh",
+      },
+      blur: {
+        xs: "2px",
       },
     },
   },

@@ -3,7 +3,7 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2020,
-    sourceType: "module", // ES 모듈 사용
+    sourceType: "module",
     ecmaFeatures: {
       jsx: true,
     },
@@ -15,7 +15,7 @@ module.exports = {
   },
   settings: {
     react: {
-      version: "detect", // React 버전을 자동으로 감지
+      version: "detect",
     },
   },
   extends: [
@@ -30,9 +30,9 @@ module.exports = {
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   plugins: ["react", "@typescript-eslint", "prettier"],
   rules: {
-    "react/react-in-jsx-scope": "off", // React 17 이상에서는 JSX에서 React를 import할 필요 없음
-    "react/jsx-uses-react": "off", // JSX에서 React 사용을 감지하지 않게 함
-    "no-undef": "off", // TypeScript가 전역 변수를 정의하므로 no-undef 비활성화
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
+    "no-undef": "off",
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },

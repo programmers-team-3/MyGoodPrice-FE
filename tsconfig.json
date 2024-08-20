@@ -3,13 +3,15 @@
     "target": "es2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext", // ES 모듈 사용
+    "module": "ESNext",
     "skipLibCheck": true,
     "types": ["vite/client", "vite-plugin-svgr/client", "kakao.maps.d.ts"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     },
+
+    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
