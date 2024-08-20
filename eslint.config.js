@@ -18,8 +18,8 @@ export default [
       },
     },
     rules: {
-      "react/react-in-jsx-scope": "off", // React 17 이상에서는 JSX에서 React를 import할 필요 없음
-      "react/jsx-uses-react": "off", // JSX에서 React 사용을 감지하지 않게 함
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-uses-react": "off",
     },
   },
   pluginJs.configs.recommended,
