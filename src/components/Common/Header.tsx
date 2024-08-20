@@ -6,7 +6,7 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <HeaderStyle>
-      <Logo className="cursor-pointer" onClick={() => navigate("/")} />
+      <Logo className="cursor-pointer h-8" onClick={() => navigate("/")} />
     </HeaderStyle>
   );
 };
