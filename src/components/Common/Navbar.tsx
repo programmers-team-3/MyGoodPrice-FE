@@ -10,17 +10,17 @@ const Navbar = () => {
   return (
     <NavbarStyle>
       <PiMapPinAreaBold
-        className="h-[7vh] w-auto cursor-pointer"
+        className="h-8 w-auto cursor-pointer"
         style={{ color: theme.mainColor }}
         onClick={() => navigate("/map")}
       />
       <AiOutlineHome
-        className="h-[7vh] w-auto cursor-pointer"
+        className="h-8 w-auto cursor-pointer"
         style={{ color: theme.mainColor }}
         onClick={() => navigate("/")}
       />
       <IoPersonOutline
-        className="h-[7vh] w-auto cursor-pointer"
+        className="h-8 w-auto cursor-pointer"
         style={{ color: theme.mainColor }}
         onClick={() => navigate("/mypage")}
       />
