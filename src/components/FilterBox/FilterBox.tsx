@@ -83,6 +83,3 @@ export default function FilterBox({ rtl }: { rtl: boolean }) {
     </>
   );
 }
-
-// className="h-2 w-full bg-subDarkColor"
-// className="h-12 w-12 rounded-full bg-mainDarkColor"
