@@ -16,6 +16,9 @@ export default {
       margin: {
         header: "8vh",
       },
+      padding: {
+        footer: "8vh",
+      },
       blur: {
         xs: "2px",
       },
