@@ -2,9 +2,11 @@ import Button from "@/components/Button/Button";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import StoreOverview from "@/components/Overview/StoreOverview";
 import { IoFilter } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@/components/Layout/ModalLayout";
 import FilterBox from "@/components/FilterBox/FilterBox";
+import useGeoLocation from "@/store/useGeoLocation";
+import { getCurrentLocation } from "@/utils/getCurLocation";
 
 const dummyFoodFilterData = [
   {
@@ -32,6 +34,19 @@ export default function Home() {
   const [current, setCurrent] = useState<number>(1);
   const [input, setInput] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
+  const setGeoLocation = useGeoLocation((state) => state.setGeoLocation);
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        await getCurrentLocation(setGeoLocation);
+      } catch (error) {
+        console.error("위치 정보를 가져오는 데 오류가 발생했습니다.", error);
+      }
+    };
+
+    fetchLocation();
+  }, [setGeoLocation]);
 
   return (
     <div
@@ -39,7 +54,7 @@ export default function Home() {
       overflow-hidden ${open && "opacity-40 blur-xs"} py-4 m-4 self-center
       justify-start`}
     >
-      <div className="flex gap-8 justify-between items-center">
+      <div className="flex items-center justify-between gap-8">
         <div className="flex gap-4 overflow-x-scroll">
           {dummyFoodFilterData.map((data) => {
             return (
@@ -54,8 +69,7 @@ export default function Home() {
           })}
         </div>
         <IoFilter
-          className="w-8 h-8 text-subColor
-      transition duration-300 hover:text-subDarkColor cursor-pointer"
+          className="w-8 h-8 transition duration-300 cursor-pointer text-subColor hover:text-subDarkColor"
           onClick={() => setOpen(true)}
         />
       </div>
