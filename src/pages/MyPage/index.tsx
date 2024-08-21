@@ -7,48 +7,6 @@ import Button from "@/components/Button/Button";
 import Modal from "@/components/Layout/ModalLayout";
 import StoreOverview from "@/components/Overview/StoreOverview";
 
-const dummyData = [
-  {
-    id: 1,
-    shopName: "눈나무집",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 삼청로 136-1",
-    tel: "02-739-6742",
-    category: "한식",
-    menu: [
-      {
-        id: 1,
-        menu: "김치말이국수",
-        price: 6500,
-      },
-      {
-        id: 2,
-        menu: "김치볶음밥",
-        price: 6500,
-      },
-    ],
-  },
-  {
-    id: 2,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-];
 const MyPage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<string | null>(null);

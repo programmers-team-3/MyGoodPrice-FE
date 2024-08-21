@@ -5,29 +5,8 @@ import { IoFilter } from "react-icons/io5";
 import { useState } from "react";
 import Modal from "@/components/Layout/ModalLayout";
 import FilterBox from "@/components/FilterBox/FilterBox";
+import { dummyFoodFilterData } from "@/store/data";
 
-const dummyFoodFilterData = [
-  {
-    id: 1,
-    name: "한식",
-  },
-  {
-    id: 2,
-    name: "중식",
-  },
-  {
-    id: 3,
-    name: "양식",
-  },
-  {
-    id: 4,
-    name: "일식",
-  },
-  {
-    id: 5,
-    name: "기타",
-  },
-];
 export default function Home() {
   const [current, setCurrent] = useState<number>(1);
   const [input, setInput] = useState<string>("");
@@ -39,7 +18,7 @@ export default function Home() {
       overflow-hidden ${open && "opacity-40 blur-xs"} py-4 m-4 self-center
       justify-start`}
     >
-      <div className="flex gap-8 justify-between items-center">
+      <div className="flex gap-4 justify-between items-center">
         <div className="flex gap-4 overflow-x-scroll">
           {dummyFoodFilterData.map((data) => {
             return (
