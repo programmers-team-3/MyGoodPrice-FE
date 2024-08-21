@@ -16,7 +16,7 @@ export default function Button({
     : "bg-mainBrighterColor text-mainColor hover:bg-mainBrightColor";
 
   const sizeClasses = {
-    small: "px-4 py-2 text-sm",
+    small: "px-4 py-1 text-sm rounded",
     medium: "px-6 py-1 text-xl rounded-2xl",
     large: "px-8 py-2 text-3xl rounded-xl",
   };
