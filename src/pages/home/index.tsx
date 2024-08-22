@@ -45,7 +45,7 @@ export default function Home() {
       <StoreOverview />
       {open && (
         <Modal isOpen={open} setOpen={setOpen}>
-          <FilterBox rtl={false} />
+          <FilterBox rtl={false} handleCloseModal={() => setOpen(false)} />
         </Modal>
       )}
     </div>

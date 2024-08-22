@@ -8,12 +8,14 @@ type ModalProps = {
   isOpen: boolean;
   setOpen: (boolean: boolean) => void;
   children?: ReactNode;
+  isReset?: boolean;
 };
 
 export default function Modal({
   isOpen = false,
   setOpen,
   children,
+  isReset = true,
 }: ModalProps) {
   const modalRoot = document.querySelector("#filter-modal") as HTMLElement;
 
@@ -35,23 +37,27 @@ export default function Modal({
     w-1/2 z-10"
     >
       {isOpen ? (
-        <div className="mx-6 border-y-2 border-subDarkColor h-full">
+        <MobileLayout className="mx-6 border-y-2 border-subDarkColor h-full">
           <div
             className="absolute left-10 top-4 flex gap-2 items-center cursor-pointer"
             onClick={() => handleReset()}
           >
-            <GrPowerReset
-              className="w-8 h-8
+            {isReset && (
+              <>
+                <GrPowerReset
+                  className="w-8 h-8
             transition-transform duration-300 ease-in-out hover:rotate-90"
-            />
-            <p>초기화</p>
+                />
+                <p>초기화</p>
+              </>
+            )}
           </div>
           <IoIosClose
             className="absolute right-8 w-16 h-16 cursor-pointer"
             onClick={() => setOpen(false)}
           />
           <div className="mt-header pb-footer h-full">{children}</div>
-        </div>
+        </MobileLayout>
       ) : null}
     </ModalLayout>,
     modalRoot
@@ -63,5 +69,11 @@ const ModalLayout = styled.div`
   height: 82vh;
   @media (max-width: 768px) {
     width: 80%;
+  }
+`;
+
+const MobileLayout = styled.div`
+  @media (max-width: 768px) {
+    margin: 0;
   }
 `;
