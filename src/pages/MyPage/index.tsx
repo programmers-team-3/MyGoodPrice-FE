@@ -6,52 +6,15 @@ import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
 import Modal from "@/components/Layout/ModalLayout";
 import StoreOverview from "@/components/Overview/StoreOverview";
+import LocationBox from "@/components/AddressBox/AddressBox";
+import SaveAddress from "@/components/AddressBox/SaveAddress";
+import { AddressTypes } from "@/types";
+import { Address } from "react-daum-postcode";
 
-const dummyData = [
-  {
-    id: 1,
-    shopName: "눈나무집",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 삼청로 136-1",
-    tel: "02-739-6742",
-    category: "한식",
-    menu: [
-      {
-        id: 1,
-        menu: "김치말이국수",
-        price: 6500,
-      },
-      {
-        id: 2,
-        menu: "김치볶음밥",
-        price: 6500,
-      },
-    ],
-  },
-  {
-    id: 2,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-];
 const MyPage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<string | null>(null);
+  const [addresses, setAddresses] = useState<AddressTypes[]>([]);
   const [open, setOpen] = useState(false);
   const [showList, setShowList] = useState(true);
 
@@ -86,6 +49,40 @@ const MyPage = () => {
   const moveAnalyze = () => {
     navigate("/analyze");
   };
+
+  const addAddress = (address: Address) => {
+    setAddresses((prev) => [
+      ...prev,
+      {
+        id: address.buildingCode,
+        name: address.roadAddress,
+        isMain: prev.length === 0,
+      },
+    ]);
+    setOpen(false);
+  };
+
+  const deleteAddress = (address: AddressTypes) => {
+    setAddresses((prevAddresses) => {
+      const isMainAddress = address.isMain;
+      const updatedAddresses = prevAddresses.filter(
+        (adr) => adr.id !== address.id
+      );
+      if (isMainAddress)
+        if (updatedAddresses.length > 0) updatedAddresses[0].isMain = true;
+      return updatedAddresses;
+    });
+  };
+
+  const changeMainAddress = (selectedAddress: AddressTypes) => {
+    setAddresses((prevAddresses) =>
+      prevAddresses.map((address) =>
+        address.id === selectedAddress.id
+          ? { ...address, isMain: true }
+          : { ...address, isMain: false }
+      )
+    );
+  };
   return (
     <div
       className={`h-full w-full flex flex-col py-4 m-4
@@ -101,12 +98,23 @@ const MyPage = () => {
           onClick={logout}
         />
       </div>
-      <div className="relative border-b-2">
-        <p className="text-xl font-bold text-mainColor">위치 저장</p>
-        <AiOutlinePlus
-          className="w-6 h-6 cursor-pointer absolute -translate-y-1/2 top-1/2 right-2"
-          onClick={() => setOpen(true)}
-        />
+      <div className="flex flex-col gap-4">
+        <div className="relative border-b-2">
+          <p className="text-xl font-bold text-mainColor">위치 저장</p>
+          <AiOutlinePlus
+            className="w-6 h-6 cursor-pointer absolute -translate-y-1/2 top-1/2 right-2"
+            onClick={() => setOpen(true)}
+          />
+        </div>
+        {addresses.length ? (
+          <SaveAddress
+            addresses={addresses}
+            handleDeleteAddress={deleteAddress}
+            handleMainChangeAddress={changeMainAddress}
+          />
+        ) : (
+          <p>등록된 주소가 없습니다.</p>
+        )}
       </div>
       <div className="flex flex-col gap-4">
         <div className="relative border-b-2">
@@ -135,9 +143,8 @@ const MyPage = () => {
         handleSetCurrent={moveAnalyze}
       />
       {open && (
-        <Modal isOpen={open} setOpen={setOpen}>
-          위치 찾기
-          {/* 위치 등록 */}
+        <Modal isOpen={open} setOpen={setOpen} isReset={false}>
+          <LocationBox handleAddress={(address) => addAddress(address)} />
         </Modal>
       )}
     </div>

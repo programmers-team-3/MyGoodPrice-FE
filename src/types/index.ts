@@ -21,5 +21,12 @@ export type ShopTypes = {
   address: string;
   tel: string;
   category: string;
+  likes: number;
   menu: MenuTypes[];
+};
+
+export type AddressTypes = {
+  id: string;
+  name: string;
+  isMain: boolean;
 };

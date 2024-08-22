@@ -34,6 +34,7 @@ export default function Home() {
   const [current, setCurrent] = useState<number>(1);
   const [input, setInput] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
+
   const setGeoLocation = useGeoLocation((state) => state.setGeoLocation);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export default function Home() {
       overflow-hidden ${open && "opacity-40 blur-xs"} py-4 m-4 self-center
       justify-start`}
     >
-      <div className="flex items-center justify-between gap-8">
+      <div className="flex gap-8 justify-between items-center">
         <div className="flex gap-4 overflow-x-scroll">
           {dummyFoodFilterData.map((data) => {
             return (
@@ -69,7 +70,8 @@ export default function Home() {
           })}
         </div>
         <IoFilter
-          className="w-8 h-8 transition duration-300 cursor-pointer text-subColor hover:text-subDarkColor"
+          className="w-8 h-8 text-subColor
+      transition duration-300 hover:text-subDarkColor cursor-pointer"
           onClick={() => setOpen(true)}
         />
       </div>
@@ -80,7 +82,7 @@ export default function Home() {
       <StoreOverview />
       {open && (
         <Modal isOpen={open} setOpen={setOpen}>
-          <FilterBox rtl={false} />
+          <FilterBox rtl={false} handleCloseModal={() => setOpen(false)} />
         </Modal>
       )}
     </div>
