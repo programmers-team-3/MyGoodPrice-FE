@@ -1,397 +1,29 @@
 import { useState, Fragment } from "react";
 import { ShopTypes } from "@/types";
-const dummyData = [
-  {
-    id: 1,
-    shopName: "눈나무집",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 삼청로 136-1",
-    tel: "02-739-6742",
-    category: "한식",
-    menu: [
-      {
-        id: 1,
-        menu: "김치말이국수",
-        price: 6500,
-      },
-      {
-        id: 2,
-        menu: "김치볶음밥",
-        price: 6500,
-      },
-    ],
-  },
-  {
-    id: 2,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 3,
-    shopName: "먹고갈래지고갈래",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 수표로 117 (낙원동)",
-    tel: "02-367-1239",
-    category: "한식",
-    menu: [
-      {
-        id: 1,
-        menu: "삼계탕",
-        price: 13000,
-      },
-      {
-        id: 2,
-        menu: "산채비빔밥",
-        price: 7000,
-      },
-    ],
-  },
-  {
-    id: 4,
-    shopName: "눈나무집",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 삼청로 136-1",
-    tel: "02-739-6742",
-    category: "한식",
-    menu: [
-      {
-        id: 1,
-        menu: "김치말이국수",
-        price: 6500,
-      },
-      {
-        id: 2,
-        menu: "김치볶음밥",
-        price: 6500,
-      },
-    ],
-  },
-  {
-    id: 5,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 6,
-    shopName: "먹고갈래지고갈래",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 수표로 117 (낙원동)",
-    tel: "02-367-1239",
-    category: "한식",
-    menu: [
-      {
-        id: 1,
-        menu: "삼계탕",
-        price: 13000,
-      },
-      {
-        id: 2,
-        menu: "산채비빔밥",
-        price: 7000,
-      },
-    ],
-  },
-  {
-    id: 7,
-    shopName: "눈나무집",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 삼청로 136-1",
-    tel: "02-739-6742",
-    category: "한식",
-    menu: [
-      {
-        id: 1,
-        menu: "김치말이국수",
-        price: 6500,
-      },
-      {
-        id: 2,
-        menu: "김치볶음밥",
-        price: 6500,
-      },
-    ],
-  },
-  {
-    id: 8,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 9,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 10,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 11,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 12,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 13,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 14,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 15,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 16,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 17,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 18,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-  {
-    id: 19,
-    shopName: "대륙",
-    region: "서울특별시 종로구",
-    address: "서울특별시 종로구 종로 125 (종로3가) 1~2층",
-    tel: "02-766-8411	",
-    category: "중식",
-    menu: [
-      {
-        id: 1,
-        menu: "짜장면",
-        price: 7000,
-      },
-      {
-        id: 2,
-        menu: "짬뽕",
-        price: 8000,
-      },
-    ],
-  },
-];
+import { FcLike, FcLikePlaceholder } from "react-icons/fc";
+import { PiCaretUpDownLight } from "react-icons/pi";
+import { dummyShopData, dummyUserLikeData } from "@/store/data";
+
+type AttributeType = {
+  id: number;
+  name: string;
+  isSorting: boolean;
+};
 
 type StoreOverviewProps = {
   tableSize?: number;
   data?: ShopTypes[];
-  attribute?: string[];
+  attributes?: AttributeType[];
 };
 export default function StoreOverview({
   tableSize = 4,
-  data = dummyData,
-  attribute = ["Shop Name", "Region", "Category", "Review"],
+  data = dummyShopData,
+  attributes = [
+    { id: 1, name: "가게 이름", isSorting: false },
+    { id: 2, name: "위치", isSorting: false },
+    { id: 3, name: "카테고리", isSorting: false },
+    { id: 4, name: "찜", isSorting: true },
+  ],
 }: StoreOverviewProps) {
   const [current, setCurrent] = useState<number | null>(null);
 
@@ -401,9 +33,20 @@ export default function StoreOverview({
     // handle filtering category api 필요
   };
 
-  const handleGoReview = (id: number) => {
-    console.log(id);
+  const toggleLikes = (id: number) => {
+    if (dummyUserLikeData.includes(id)) return;
+    else return;
+    // /likes api 작성
+  };
+
+  const handleLikeSorting = () => {
+    // data Sorting => like
+    console.log("sorting");
+  };
+
+  const handleMoveShop = (id: number) => {
     // navigate
+    console.log(id);
   };
 
   return (
@@ -412,9 +55,17 @@ export default function StoreOverview({
         <table className="min-w-full bg-white border border-subDarkColor">
           <thead>
             <tr className="text-mainColor bg-mainBrighterColor">
-              {attribute.map((title, idx) => (
-                <th key={idx} className="py-2 px-4 border-b">
-                  {title}
+              {attributes.map((attribute) => (
+                <th key={attribute.id} className="py-2 border-b relative">
+                  <div className="flex justify-center items-center">
+                    <p>{attribute.name}</p>
+                    {attribute.isSorting && (
+                      <PiCaretUpDownLight
+                        className="w-4 h-4"
+                        onClick={handleLikeSorting}
+                      />
+                    )}
+                  </div>
                 </th>
               ))}
             </tr>
@@ -428,12 +79,22 @@ export default function StoreOverview({
                 >
                   <td className="py-2 px-4 border-b">{shop.shopName}</td>
                   <td className="py-2 px-4 border-b">{shop.region}</td>
-                  <td className="py-2 px-4 border-b">{shop.category}</td>
+                  <td className="py-2 px-4 border-b whitespace-nowrap">
+                    {shop.category}
+                  </td>
                   <td
                     className="py-2 px-4 border-b"
-                    onClick={() => handleGoReview(shop.id)}
+                    onClick={() => toggleLikes(shop.id)}
                   >
-                    go
+                    <span className="flex justify-center items-center gap-2">
+                      {dummyUserLikeData.includes(shop.id) ? (
+                        <FcLike />
+                      ) : (
+                        <FcLikePlaceholder />
+                      )}
+
+                      <p>{shop.likes}</p>
+                    </span>
                   </td>
                 </tr>
                 {current === shop.id && (
@@ -441,6 +102,7 @@ export default function StoreOverview({
                     <td
                       colSpan={tableSize}
                       className="py-2 px-4 border-b bg-mainBrighterColor"
+                      onClick={() => handleMoveShop(shop.id)}
                     >
                       <div>
                         <p>
