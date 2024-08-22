@@ -2,23 +2,60 @@ import Button from "@/components/Button/Button";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import StoreOverview from "@/components/Overview/StoreOverview";
 import { IoFilter } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@/components/Layout/ModalLayout";
 import FilterBox from "@/components/FilterBox/FilterBox";
-import { dummyFoodFilterData } from "@/store/data";
+import useGeoLocation from "@/store/useGeoLocation";
+import { getCurrentLocation } from "@/utils/getCurLocation";
 
+const dummyFoodFilterData = [
+  {
+    id: 1,
+    name: "한식",
+  },
+  {
+    id: 2,
+    name: "중식",
+  },
+  {
+    id: 3,
+    name: "양식",
+  },
+  {
+    id: 4,
+    name: "일식",
+  },
+  {
+    id: 5,
+    name: "기타",
+  },
+];
 export default function Home() {
   const [current, setCurrent] = useState<number>(1);
   const [input, setInput] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
 
+  const setGeoLocation = useGeoLocation((state) => state.setGeoLocation);
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        await getCurrentLocation(setGeoLocation);
+      } catch (error) {
+        console.error("위치 정보를 가져오는 데 오류가 발생했습니다.", error);
+      }
+    };
+
+    fetchLocation();
+  }, [setGeoLocation]);
+
   return (
     <div
       className={`h-full w-full flex flex-col gap-4 transition duration-300
-      overflow-hidden ${open && "opacity-10 blur-sm"} py-4 m-4 self-center
+      overflow-hidden ${open && "opacity-40 blur-xs"} py-4 m-4 self-center
       justify-start`}
     >
-      <div className="flex gap-4 justify-between items-center">
+      <div className="flex gap-8 justify-between items-center">
         <div className="flex gap-4 overflow-x-scroll">
           {dummyFoodFilterData.map((data) => {
             return (
