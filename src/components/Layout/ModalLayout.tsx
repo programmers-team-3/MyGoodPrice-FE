@@ -32,22 +32,16 @@ export default function Modal({
   };
 
   return createPortal(
-    <ModalLayout
-      className="flex flex-col fixed right-1/2 top-0 translate-x-1/2
-    w-1/2 z-10"
-    >
+    <ModalLayout className="fixed top-0 z-10 flex flex-col w-1/2 translate-x-1/2 right-1/2">
       {isOpen ? (
-        <MobileLayout className="mx-6 border-y-2 border-subDarkColor h-full relative">
+        <MobileLayout className="relative h-full p-2 mx-6 border-2 border-subDarkColor bg-mainBrightColor rounded-xl opacity-9">
           <div
-            className="absolute left-2 top-4 flex gap-2 items-center cursor-pointer"
+            className="absolute flex items-center gap-2 cursor-pointer left-2 top-4"
             onClick={() => handleReset()}
           >
             {isReset && (
               <>
-                <GrPowerReset
-                  className="w-8 h-8
-            transition-transform duration-300 ease-in-out hover:rotate-90"
-                />
+                <GrPowerReset className="w-8 h-8 transition-transform duration-300 ease-in-out hover:rotate-90" />
                 <p>초기화</p>
               </>
             )}
@@ -56,7 +50,7 @@ export default function Modal({
             className="absolute right-0 w-16 h-16 cursor-pointer"
             onClick={() => setOpen(false)}
           />
-          <div className="mt-header pb-footer h-full">{children}</div>
+          <div className="h-full mt-header pb-footer">{children}</div>
         </MobileLayout>
       ) : null}
     </ModalLayout>,
