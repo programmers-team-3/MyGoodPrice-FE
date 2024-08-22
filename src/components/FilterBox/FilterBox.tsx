@@ -11,10 +11,15 @@ const STEP = 100;
 const MIN = 0;
 const MAX = 10000;
 // 최솟값, 최댓값 수정 필요
-export default function FilterBox({ rtl }: { rtl: boolean }) {
-  const [values, setValues] = useState<number[]>([0, 10000]);
+
+type FilterBoxProps = {
+  rtl: boolean;
+  handleCloseModal: () => void;
+};
+export default function FilterBox({ rtl, handleCloseModal }: FilterBoxProps) {
+  const [values, setValues] = useState<number[]>([2500, 7500]);
   const [rangeFilter, setRangeFilter] = useState<boolean[]>([true, true, true]);
-  const [location, setLocation] = useState<string | null>(null);
+  const [location, setLocation] = useState<string | null>("null");
   const [category, setCategory] = useState<number | null>(1);
 
   const handleChange = (idx: number, value: string) => {
@@ -35,6 +40,7 @@ export default function FilterBox({ rtl }: { rtl: boolean }) {
 
   const handleSearch = () => {
     console.log("search");
+    handleCloseModal();
   };
 
   return (
@@ -102,13 +108,13 @@ export default function FilterBox({ rtl }: { rtl: boolean }) {
           id={0}
           handleCheck={(isChecked: boolean) => handleRangeFilter(0, isChecked)}
         />
-        <MobileLayout className="w-full flex gap-4 justify-end overflow-x-scroll">
+        <MobileLayout className="w-full flex gap-4 justify-end">
           <input
             type="number"
             disabled={!rangeFilter[0]}
             value={values[0].toString()}
             onChange={(e) => handleChange(0, e.target.value)}
-            className={`w-20 px-1 border border-subDarkColor ${
+            className={`w-16 px-1 border border-subDarkColor ${
               rangeFilter[0] ? "" : "text-subDarkColor"
             } rounded focus:outline-none focus:ring-2 focus:ring-mainColor focus:border-transparent`}
           />
@@ -118,7 +124,7 @@ export default function FilterBox({ rtl }: { rtl: boolean }) {
             disabled={!rangeFilter[0]}
             value={values[1].toString()}
             onChange={(e) => handleChange(1, e.target.value)}
-            className={`w-20 px-1 border border-subDarkColor ${
+            className={`w-16 px-1 border border-subDarkColor ${
               rangeFilter[0] ? "" : "text-subDarkColor"
             } rounded focus:outline-none focus:ring-2 focus:ring-mainColor focus:border-transparent`}
           />
@@ -134,7 +140,7 @@ export default function FilterBox({ rtl }: { rtl: boolean }) {
           handleCheck={(isChecked: boolean) => handleRangeFilter(1, isChecked)}
         />
         <MobileLayout className="w-full flex justify-end">
-          {location ? location : "선택하지 않음"}
+          {location && rangeFilter[1] ? location : "선택하지 않음"}
         </MobileLayout>
       </div>
       {rangeFilter[1] && (
