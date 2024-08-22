@@ -37,9 +37,9 @@ export default function Modal({
     w-1/2 z-10"
     >
       {isOpen ? (
-        <MobileLayout className="mx-6 border-y-2 border-subDarkColor h-full">
+        <MobileLayout className="mx-6 border-y-2 border-subDarkColor h-full relative">
           <div
-            className="absolute left-10 top-4 flex gap-2 items-center cursor-pointer"
+            className="absolute left-2 top-4 flex gap-2 items-center cursor-pointer"
             onClick={() => handleReset()}
           >
             {isReset && (
@@ -53,7 +53,7 @@ export default function Modal({
             )}
           </div>
           <IoIosClose
-            className="absolute right-8 w-16 h-16 cursor-pointer"
+            className="absolute right-0 w-16 h-16 cursor-pointer"
             onClick={() => setOpen(false)}
           />
           <div className="mt-header pb-footer h-full">{children}</div>
@@ -65,10 +65,14 @@ export default function Modal({
 }
 
 const ModalLayout = styled.div`
-  margin: 8vh 0 10vh 0;
-  height: 82vh;
+  margin: 18vh 0 20vh 0;
+  padding: 0 8vh;
+  height: 62vh;
   @media (max-width: 768px) {
     width: 80%;
+    padding: 0 2vh;
+    margin: 20vh 0 22vh 0;
+    height: 58vh;
   }
 `;
 

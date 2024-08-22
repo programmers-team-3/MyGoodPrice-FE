@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div
       className={`h-full w-full flex flex-col gap-4 transition duration-300
-      overflow-hidden ${open && "opacity-40 blur-xs"} py-4 m-4 self-center
+      overflow-hidden ${open && "opacity-10 blur-sm"} py-4 m-4 self-center
       justify-start`}
     >
       <div className="flex gap-4 justify-between items-center">
