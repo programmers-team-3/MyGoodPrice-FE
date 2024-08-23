@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { IoIosClose } from "react-icons/io";
 import { GrPowerReset } from "react-icons/gr";
 import styled from "styled-components";
+import useShopStore from "@/store/useShopStore";
 
 type ModalProps = {
   isOpen: boolean;
@@ -18,7 +19,7 @@ export default function Modal({
   isReset = true,
 }: ModalProps) {
   const modalRoot = document.querySelector("#filter-modal") as HTMLElement;
-
+  const { setFilter } = useShopStore();
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -27,8 +28,20 @@ export default function Modal({
   }, []);
 
   const handleReset = () => {
-    console.log("handle Reset");
-    // zustand 상태 초기화
+    setFilter({
+      input: "",
+      minPrice: 0,
+      maxPrice: 10000,
+      location: {
+        state: null,
+        city: null,
+      },
+      page: 1,
+      limit: 15,
+      category: null,
+      checkFilter: [false, false, false],
+      isEnd: false,
+    });
   };
 
   return createPortal(
