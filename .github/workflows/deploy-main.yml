@@ -27,10 +27,10 @@ jobs:
               nodeversion: "21"
               spa: true
               buildenv: 
-                - VITE_KAKAO_REST_API_KEY=${{ secrets.VITE_KAKAO_REST_API_KEY }}
-                - VITE_LOGIN_REDIRECT_URL=${{ secrets.VITE_LOGIN_REDIRECT_URL }}
-                - VITE_KAKAOMAP_JAVASCRIPT_APP_KEY=${{ secrets.VITE_KAKAOMAP_JAVASCRIPT_APP_KEY }}
-                - VITE_PRODUCTION_API_BASE_URL=${{ secrets.VITE_PRODUCTION_API_BASE_URL }}
+                - VITE_KAKAO_REST_API_KEY:${{ secrets.VITE_KAKAO_REST_API_KEY }}
+                - VITE_LOGIN_REDIRECT_URL:${{ secrets.VITE_LOGIN_REDIRECT_URL }}
+                - VITE_KAKAOMAP_JAVASCRIPT_APP_KEY:${{ secrets.VITE_KAKAOMAP_JAVASCRIPT_APP_KEY }}
+                - VITE_PRODUCTION_API_BASE_URL:${{ secrets.VITE_PRODUCTION_API_BASE_URL }}
               rewrites: []
             context:
               git:
