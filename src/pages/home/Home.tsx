@@ -105,8 +105,7 @@ export default function Home() {
           })}
         </div>
         <IoFilter
-          className="w-8 h-8 text-subColor
-      transition duration-300 hover:text-subDarkColor cursor-pointer"
+          className="w-8 h-8 transition duration-300 cursor-pointer text-subColor hover:text-subDarkColor"
           onClick={() => setOpen(true)}
         />
       </div>

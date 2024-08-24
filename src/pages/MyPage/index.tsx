@@ -4,7 +4,6 @@ import { IoIosLogOut } from "react-icons/io";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
-import Modal from "@/components/Layout/ModalLayout";
 import StoreOverview from "@/components/Overview/StoreOverview";
 import LocationBox from "@/components/AddressBox/AddressBox";
 import SaveAddress from "@/components/AddressBox/SaveAddress";
@@ -90,21 +89,24 @@ const MyPage = () => {
     overflow-y-scroll ${open && "opacity-40 blur-xs"} self-center
     justify-start`}
     >
-      <div className="flex items-end gap-1 font-bold relative">
+      <div className="relative flex items-end gap-1 font-bold">
         <span className="text-2xl text-mainDarkColor">{user?.slice(0, 8)}</span>
         <span className="text-lg"> 님의 페이지</span>
         <IoIosLogOut
-          className="cursor-pointer absolute w-8 h-8 top-0 right-0 text-subColor"
+          className="absolute top-0 right-0 w-8 h-8 cursor-pointer text-subColor"
           onClick={logout}
         />
       </div>
       <div className="flex flex-col gap-4">
-        <div className="relative border-b-2">
-          <p className="text-xl font-bold text-mainColor">위치 저장</p>
-          <AiOutlinePlus
-            className="w-6 h-6 cursor-pointer absolute -translate-y-1/2 top-1/2 right-2"
+        <div className="relative flex flex-row items-center justify-between py-2 border-b-2">
+          <p className="text-xl font-bold  text-mainColor w-[25%]">
+            위치 저장
+          </p>
+          {/* <AiOutlinePlus
+            className="absolute w-6 h-6 -translate-y-1/2 cursor-pointer top-1/2 right-2"
             onClick={() => setOpen(true)}
-          />
+          /> */}
+          <LocationBox handleAddress={(address) => addAddress(address)} />
         </div>
         {addresses.length ? (
           <SaveAddress
@@ -123,12 +125,12 @@ const MyPage = () => {
           </p>
           {showList ? (
             <AiOutlineMinus
-              className="w-6 h-6 cursor-pointer absolute -translate-y-1/2 top-1/2 right-2"
+              className="absolute w-6 h-6 -translate-y-1/2 cursor-pointer top-1/2 right-2"
               onClick={() => setShowList(false)}
             />
           ) : (
             <AiOutlinePlus
-              className="w-6 h-6 cursor-pointer absolute -translate-y-1/2 top-1/2 right-2"
+              className="absolute w-6 h-6 -translate-y-1/2 cursor-pointer top-1/2 right-2"
               onClick={() => setShowList(true)}
             />
           )}
@@ -142,11 +144,11 @@ const MyPage = () => {
         name="내가 찜한 가게 분석하기"
         handleSetCurrent={moveAnalyze}
       />
-      {open && (
+      {/* {open && (
         <Modal isOpen={open} setOpen={setOpen} isReset={false}>
           <LocationBox handleAddress={(address) => addAddress(address)} />
         </Modal>
-      )}
+      )} */}
     </div>
   );
 };
