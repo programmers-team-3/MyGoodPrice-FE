@@ -1,37 +1,82 @@
 import Button from "@/components/Button/Button";
 import SearchBar from "@/components/SearchBar/SearchBar";
+import Loading from "@/components/Loading/LoadingBar";
 import StoreOverview from "@/components/Overview/StoreOverview";
 import { IoFilter } from "react-icons/io5";
-import { useState } from "react";
+import { GrPowerReset } from "react-icons/gr";
+import { useEffect, useState } from "react";
 import Modal from "@/components/Layout/ModalLayout";
 import FilterBox from "@/components/FilterBox/FilterBox";
+import useGeoLocation from "@/store/useGeoLocation";
+import { getCurrentLocation } from "@/utils/getCurLocation";
+import useShopStore from "@/store/useShopStore";
+import useUserStore from "@/store/useUserStore";
+import axios from "axios";
 
-const dummyFoodFilterData = [
-  {
-    id: 1,
-    name: "한식",
-  },
-  {
-    id: 2,
-    name: "중식",
-  },
-  {
-    id: 3,
-    name: "양식",
-  },
-  {
-    id: 4,
-    name: "일식",
-  },
-  {
-    id: 5,
-    name: "기타",
-  },
-];
 export default function Home() {
-  const [current, setCurrent] = useState<number>(1);
-  const [input, setInput] = useState<string>("");
+  const { categoryFilter, setCurrentShopData, currentFilter, setFilter } =
+    useShopStore();
+  const { loading, setLoading } = useUserStore();
+  const [current, setCurrent] = useState<string>("전체");
   const [open, setOpen] = useState<boolean>(false);
+
+  const setGeoLocation = useGeoLocation((state) => state.setGeoLocation);
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        await getCurrentLocation(setGeoLocation);
+      } catch (error) {
+        console.error("위치 정보를 가져오는 데 오류가 발생했습니다.", error);
+      }
+    };
+
+    fetchLocation();
+  }, [setGeoLocation]);
+
+  // [API] ('/shop') : 검색
+  const searchShop = async () => {
+    const url = `${
+      import.meta.env.VITE_PRODUCTION_API_BASE_URL
+    }/stores?page=1&limit=${
+      currentFilter.limit
+    }&category=null&maxPrice=null&minPrice=null&location=null&search=${
+      currentFilter.input
+    }`;
+    try {
+      setLoading(true);
+      const res = await axios.get(url);
+      console.log(res);
+      setCurrentShopData(res.data);
+      setFilter({
+        ...currentFilter,
+        isEnd: res.data.length !== currentFilter.limit,
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+
+  const resetShop = () => {
+    setCurrentShopData(null);
+    setCurrent("전체");
+    setFilter({
+      input: "",
+      minPrice: 0,
+      maxPrice: 10000,
+      location: {
+        state: null,
+        city: null,
+      },
+      page: 1,
+      limit: 15,
+      category: null,
+      checkFilter: [false, false, false],
+      isEnd: false,
+    });
+  };
 
   return (
     <div
@@ -39,16 +84,22 @@ export default function Home() {
       overflow-hidden ${open && "opacity-40 blur-xs"} py-4 m-4 self-center
       justify-start`}
     >
-      <div className="flex items-center justify-between gap-8">
+      {loading && <Loading text="가게 찾는 중.." />}
+      <div className="flex gap-8 justify-between items-center">
+        <GrPowerReset
+          className="w-8 h-8 text-subColor
+      transition duration-300 hover:text-subDarkColor cursor-pointer"
+          onClick={() => resetShop()}
+        />
         <div className="flex gap-4 overflow-x-scroll">
-          {dummyFoodFilterData.map((data) => {
+          {categoryFilter.map((data) => {
             return (
               <Button
                 key={data.id}
-                isActive={current === data.id}
+                isActive={current === data.name}
                 size={"medium"}
                 name={data.name}
-                handleSetCurrent={() => setCurrent(data.id)}
+                handleSetCurrent={() => setCurrent(data.name)}
               />
             );
           })}
@@ -59,10 +110,16 @@ export default function Home() {
         />
       </div>
       <SearchBar
-        value={input}
-        handleChangeText={(text: string) => setInput(text)}
+        value={currentFilter.input}
+        handleSearch={searchShop}
+        handleChangeText={(text: string) =>
+          setFilter({
+            ...currentFilter,
+            input: text,
+          })
+        }
       />
-      <StoreOverview />
+      <StoreOverview currentCategory={current} />
       {open && (
         <Modal isOpen={open} setOpen={setOpen}>
           <FilterBox rtl={false} handleCloseModal={() => setOpen(false)} />

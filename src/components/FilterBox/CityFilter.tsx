@@ -1,21 +1,13 @@
 import { useEffect, useState } from "react";
+import useShopStore from "@/store/useShopStore";
 
 type CityData = {
   [key: string]: string[];
 };
 
-type Location = {
-  city: string;
-  subArea: string;
-};
-
-type CityFilterProps = {
-  handleLocationChange: (location: string | null) => void;
-};
-
-export default function CityFilter({ handleLocationChange }: CityFilterProps) {
+export default function CityFilter() {
+  const { currentFilter, setFilter } = useShopStore();
   const [citiesData, setCitiesData] = useState<CityData>({});
-  const [location, setLocation] = useState<Location>({ city: "", subArea: "" });
   const [subAreas, setSubAreas] = useState<string[]>([]);
 
   useEffect(() => {
@@ -26,24 +18,33 @@ export default function CityFilter({ handleLocationChange }: CityFilterProps) {
   }, []);
 
   useEffect(() => {
-    if (location.city && citiesData[location.city]) {
-      setSubAreas(citiesData[location.city]);
-      setLocation((prevLocation) => ({ ...prevLocation, subArea: "" }));
-    } else {
-      setSubAreas([]);
-      setLocation((prevLocation) => ({ ...prevLocation, subArea: "" }));
-    }
-  }, [location.city, citiesData]);
+    if (
+      currentFilter.location.state &&
+      citiesData[currentFilter.location.state]
+    )
+      setSubAreas(citiesData[currentFilter.location.state]);
+    else setSubAreas([]);
+  }, [currentFilter.location.state, citiesData]);
 
-  const selectedLocation =
-    location.city && location.subArea
-      ? `${location.city} ${location.subArea}`
-      : null;
+  const handleSetState = (state: string) => {
+    setFilter({
+      ...currentFilter,
+      location: {
+        state,
+        city: "",
+      },
+    });
+  };
 
-  useEffect(() => {
-    if (selectedLocation) handleLocationChange(selectedLocation);
-    else handleLocationChange(null);
-  }, [selectedLocation, handleLocationChange]);
+  const handleSetCity = (city: string) => {
+    setFilter({
+      ...currentFilter,
+      location: {
+        ...currentFilter.location,
+        city,
+      },
+    });
+  };
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -54,13 +55,12 @@ export default function CityFilter({ handleLocationChange }: CityFilterProps) {
           </p>
           <select
             id="city-select"
-            onChange={(e) =>
-              setLocation(() => ({
-                city: e.target.value,
-                subArea: "",
-              }))
+            onChange={(e) => handleSetState(e.target.value)}
+            value={
+              currentFilter.location.state
+                ? currentFilter.location.state
+                : "선택"
             }
-            value={location.city}
             className="w-full px-1 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-mainColor"
           >
             <option value="">X</option>
@@ -72,20 +72,19 @@ export default function CityFilter({ handleLocationChange }: CityFilterProps) {
           </select>
         </div>
 
-        {location.city && (
+        {currentFilter.location.state && (
           <div className="flex justify-center items-center gap-2">
             <p className="whitespace-nowrap text-mainColor font-semibold">
               구 선택
             </p>
             <select
               id="subarea-select"
-              onChange={(e) =>
-                setLocation((prevLocation) => ({
-                  ...prevLocation,
-                  subArea: e.target.value,
-                }))
+              onChange={(e) => handleSetCity(e.target.value)}
+              value={
+                currentFilter.location.city
+                  ? currentFilter.location.city
+                  : "선택"
               }
-              value={location.subArea}
               className="w-full px-1 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-mainColor"
             >
               <option value="">구 선택</option>
