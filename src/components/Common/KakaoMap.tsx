@@ -156,4 +156,3 @@ const KakaoMap = ({
 };
 
 export default KakaoMap;
-

@@ -104,6 +104,7 @@ const MyPage = () => {
       </div>
       <div className="flex flex-col gap-4">
         <div className="relative flex flex-row items-center justify-between py-2 border-b-2">
+
           <p className="text-xl font-bold  text-mainColor w-[25%]">위치 저장</p>
           <LocationBox handleAddress={(address) => addAddress(address)} />
         </div>

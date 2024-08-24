@@ -34,6 +34,7 @@ const MapPage = () => {
       navigate("/");
     }
   };
+
   // 거리 데이터 가져오기
   const fetchShopData = async () => {
     if (latitude && longitude) {
