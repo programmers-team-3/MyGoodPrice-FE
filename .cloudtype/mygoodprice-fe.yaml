@@ -1,0 +1,12 @@
+name: mygoodprice-fe
+app: web
+options:
+  nodeversion: "21"
+  spa: true
+  buildenv: []
+  rewrites: []
+context:
+  git:
+    url: https://github.com/programmers-team-3/MyGoodPrice-FE.git
+    branch: main
+  preset: react-vite

@@ -84,7 +84,6 @@ const MyPage = () => {
       )
     );
   };
-
   const { latitude, longitude } = useGeoLocation();
 
   return (

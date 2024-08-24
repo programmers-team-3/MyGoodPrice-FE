@@ -1,19 +1,23 @@
 import KakaoMap from "@/components/Common/KakaoMap";
 import styled from "styled-components";
-import { DumyDataLatLng } from "@/components/Common/DataLatLng";
 import { useEffect, useRef, useState } from "react";
 import { getCurrentLocation } from "@/utils/getCurLocation";
 import { useNavigate } from "react-router-dom";
 import useGeoLocation from "@/store/useGeoLocation";
 import { fetchDistanceData } from "@/apis/distance.api";
+import { ShopWithLocation } from "@/types";
+import formatPrice from "@/utils/getUtil";
 
 const MapPage = () => {
   const navigate = useNavigate();
+
   const scrollRef = useRef<HTMLDivElement | null>(null);
   let isDragging = false;
   let startX: number = 0;
   let scrollLeft: number = 0;
-  const [disId, setDisId] = useState<number>(0);
+
+  const [disId, setDisId] = useState<number>(1);
+  const [shopData, setShopData] = useState<ShopWithLocation[]>([]);
 
   const { latitude, longitude, setGeoLocation } = useGeoLocation((state) => ({
     latitude: state.latitude,
@@ -30,14 +34,23 @@ const MapPage = () => {
       navigate("/");
     }
   };
+
+  // 거리 데이터 가져오기
+  const fetchShopData = async () => {
+    if (latitude && longitude) {
+      const data = await fetchDistanceData(longitude, latitude, disId);
+      setShopData(data);
+      console.log(shopData);
+    }
+  };
+
   useEffect(() => {
     if (!latitude || !longitude) {
       fetchLocation();
+    } else {
+      fetchShopData();
     }
-    if (latitude && longitude) {
-      fetchDistanceData(latitude, longitude, disId);
-    }
-  }, [latitude, longitude, setGeoLocation]);
+  }, [latitude, longitude, disId]);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (scrollRef.current) {
@@ -68,19 +81,22 @@ const MapPage = () => {
       <ButtonModal>
         <div className="flex items-center justify-center w-full h-full gap-2">
           <button
-            className="w-20 bg-subColor h-[60%] rounded-2xl flex justify-center items-center shadow-xl font-bold"
+            className={`w-20 h-[60%] rounded-2xl flex justify-center items-center shadow-xl font-bold
+              ${disId === 1 ? "bg-gray-600 text-mainBrightColor" : "bg-mainBrighterColor"}`}
             onClick={() => setDisId(1)}
           >
             1km
           </button>
           <button
-            className="w-20 bg-subColor h-[60%] rounded-2xl flex justify-center items-center shadow-xl font-bold"
+            className={`w-20 h-[60%] rounded-2xl flex justify-center items-center shadow-xl font-bold
+              ${disId === 3 ? "bg-gray-600 text-mainBrightColor" : "bg-mainBrighterColor"}`}
             onClick={() => setDisId(3)}
           >
             3km
           </button>
           <button
-            className="w-20 bg-subColor h-[60%] rounded-2xl flex justify-center items-center shadow-xl font-bold"
+            className={`w-20 h-[60%] rounded-2xl flex justify-center items-center shadow-xl font-bold
+              ${disId === 5 ? "bg-gray-600 text-mainBrightColor" : "bg-mainBrighterColor"}`}
             onClick={() => setDisId(5)}
           >
             5km
@@ -89,21 +105,37 @@ const MapPage = () => {
       </ButtonModal>
       <SlideModal>
         <div
-          className="absolute bottom-0 w-full h-full pb-1 overflow-x-scroll whitespace-nowrap cursor-grab "
+          className="absolute bottom-0 w-full h-full pb-1 overflow-x-scroll overflow-y-hidden whitespace-nowrap cursor-grab"
           ref={scrollRef}
           onMouseDown={handleMouseDown}
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
         >
-          {DumyDataLatLng.map((val, idx) => (
+          {shopData.map((val, idx) => (
             <div
               key={idx}
-              className="inline-block w-48 h-full p-3 mx-2 text-sm font-bold border-2 rounded-lg shadow-xl bg-subColor text-mainDarkColor"
-              // onClick={() => navigate("/shop?shop_id=3")}
+              className="inline-block w-48 min-h-full p-3 mx-2 text-sm font-bold text-gray-600 rounded-lg shadow-2xl bg-mainBrightColor"
+              onClick={() => navigate(`shop?id=${val.id}`)}
             >
-              <p className="select-none">{val.name}</p>
-              <p className="select-none">{val.address}</p>
+              <p className="overflow-hidden text-base select-none text-mainDarkColor whitespace-nowrap text-ellipsis">
+                {val.name}
+              </p>
+              <p className="overflow-hidden select-none whitespace-nowrap text-ellipsis">
+                {val.address.split(" ").slice(1).join(" ")}
+              </p>
+              <div className="flex justify-between w-full">
+                <p className="w-1/4 select-none">{val.category} -</p>
+                <div className="flex items-center justify-end w-3/4">
+                  <p className="mr-1 overflow-hidden select-none whitespace-nowrap text-ellipsis">
+                    {val.menu[0].menu}
+                  </p>
+                  <p className="w-16 select-none">
+                    {formatPrice(val.menu[0].price)}
+                  </p>
+                </div>
+              </div>
+              <p className="select-none">{val.tel ? val.tel : "..."}</p>
             </div>
           ))}
         </div>
@@ -111,7 +143,7 @@ const MapPage = () => {
 
       {latitude && longitude && (
         <KakaoMap
-          markers={DumyDataLatLng}
+          markers={shopData}
           latitude={latitude}
           longitude={longitude}
         />
@@ -146,6 +178,7 @@ const SlideModal = styled.div`
   left: 0;
   width: 100%;
   height: 7rem;
+  overflow: hidden;
 
   z-index: 1000; // z-index 설정 (카카오맵 위에 표시)
 `;
