@@ -18,10 +18,10 @@ export default function LoginBox() {
     window.location.href = url;
   };
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 p-2">
       <div>
         <input
-          className="appearance-none border rounded w-full p-2"
+          className="w-full p-2 border rounded appearance-none"
           value={values[0]}
           type="email"
           placeholder="아이디"
@@ -30,7 +30,7 @@ export default function LoginBox() {
       </div>
       <div className="relative">
         <input
-          className="appearance-none border rounded w-full p-2"
+          className="w-full p-2 border rounded appearance-none"
           value={values[1]}
           type={show ? "text" : "password"}
           placeholder="비밀번호"
@@ -38,22 +38,17 @@ export default function LoginBox() {
         />
         {show ? (
           <LiaEyeSolid
-            className="absolute top-1/2 right-4 -translate-y-1/2
-           w-5 h-5 text-subDarkColor cursor-pointer"
+            className="absolute w-5 h-5 -translate-y-1/2 cursor-pointer top-1/2 right-4 text-subDarkColor"
             onClick={() => setShow(false)}
           />
         ) : (
           <LiaEyeSlashSolid
-            className="absolute top-1/2 right-4 -translate-y-1/2
-         w-5 h-5 text-subDarkColor cursor-pointer"
+            className="absolute w-5 h-5 -translate-y-1/2 cursor-pointer top-1/2 right-4 text-subDarkColor"
             onClick={() => setShow(true)}
           />
         )}
       </div>
-      <div
-        className="w-full h-16 flex justify-center items-center border rounded rounded-lg
-          p-2 bg-mainColor text-mainBrighterColor font-bold cursor-pointer"
-      >
+      <div className="flex items-center justify-center w-full h-16 p-2 font-bold border rounded-lg cursor-not-allowed bg-subDarkColor text-mainBrighterColor">
         <p className="text-xl">로그인</p>
       </div>
       <img
@@ -62,7 +57,7 @@ export default function LoginBox() {
         className="w-full h-16 cursor-pointer"
         onClick={handleLogin}
       />
-      <p className="text-center underline text-subDarkColor cursor-pointer">
+      <p className="text-center underline cursor-pointer text-subDarkColor">
         회원가입
       </p>
     </div>
