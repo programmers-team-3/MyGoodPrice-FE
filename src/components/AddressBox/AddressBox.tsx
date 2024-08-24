@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DaumPostcode, { Address } from "react-daum-postcode";
 import Button from "../Button/Button";
 import useGeoLocation from "@/store/useGeoLocation";
@@ -14,48 +14,22 @@ export default function AddressBox({ handleAddress }: AddressBoxProps) {
   const [role, setRole] = useState<roleTypes>(null);
   const completeHandler = (data: Address) => {
     handleAddress(data);
+    console.log(data);
   };
 
-  const setGeoLocation = useGeoLocation((state) => state.setGeoLocation);
-  const latitude = useGeoLocation((state) => state.latitude);
-  const longitude = useGeoLocation((state) => state.longitude);
+  const { latitude, longitude, setGeoLocation } = useGeoLocation();
 
-  const getLocation = () => {
-    const fetchLocation = async () => {
-      try {
-        await getCurrentLocation(setGeoLocation);
-      } catch (error) {
-        alert("위치정보가 없으면 사용할 수 없는 서비스입니다. 동의해주세요!");
-      }
-    };
+  useEffect(() => {
+    console.log(role);
+  }, [role]);
 
-    fetchLocation();
-  };
-
-  const handleLocationRequest = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        () => {
-          // 위치 정보 동의가 되었을 경우
-          getLocation();
-        },
-        (error) => {
-          // 위치 정보 동의가 거부되었을 경우
-          if (error.code === error.PERMISSION_DENIED) {
-            alert("위치 정보 권한이 필요합니다. 동의해주세요!");
-          } else {
-            alert("위치 정보를 가져오는 데 문제가 발생했습니다.");
-          }
-        }
-      );
-    } else {
-      alert("이 브라우저는 위치 정보 서비스를 지원하지 않습니다.");
+  const handleCurrentLocationButtonClick = async () => {
+    try {
+      await getCurrentLocation(setGeoLocation);
+      console.log("위치 정보가 업데이트되었습니다.");
+    } catch (error) {
+      console.error("위치 정보 업데이트에 실패했습니다.", error);
     }
-  };
-
-  const handleCurrentLocationButtonClick = () => {
-    setRole("currentPosition");
-    handleLocationRequest(); // 위치 정보 요청
   };
 
   return (
@@ -63,8 +37,12 @@ export default function AddressBox({ handleAddress }: AddressBoxProps) {
       {role === null && (
         <div className="flex flex-row justify-end gap-4 mx-auto">
           <Button
-            isActive={true}
-            name="현재 위치 정보 받기"
+            isActive={latitude && longitude ? false : true}
+            name={
+              latitude && longitude
+                ? "다시 위치정보 받기"
+                : "현재 위치정보 받기"
+            }
             size="small"
             handleSetCurrent={handleCurrentLocationButtonClick}
           />
@@ -82,13 +60,6 @@ export default function AddressBox({ handleAddress }: AddressBoxProps) {
           onComplete={completeHandler}
           style={{ height: "100%", padding: 0 }}
         />
-      )}
-      {role === "currentPosition" && (
-        <div>
-          <h2>위치 정보</h2>
-          <p>위도: {latitude}</p>
-          <p>경도: {longitude}</p>
-        </div>
       )}
     </div>
   );
