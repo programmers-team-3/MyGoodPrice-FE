@@ -1,3 +1,4 @@
+import { ShopWithLocation } from "@/types";
 import { useEffect, useRef, useState } from "react";
 
 declare global {
@@ -6,20 +7,12 @@ declare global {
   }
 }
 
-interface MarkerData {
-  id: string;
-  name: string;
-  address: string;
-  latitude: number | null;
-  longitude: number | null;
-}
-
 const KakaoMap = ({
   markers,
   latitude,
   longitude,
 }: {
-  markers: MarkerData[];
+  markers: ShopWithLocation[];
   latitude: number;
   longitude: number;
 }) => {
@@ -163,3 +156,4 @@ const KakaoMap = ({
 };
 
 export default KakaoMap;
+

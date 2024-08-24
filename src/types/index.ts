@@ -27,6 +27,11 @@ export type ShopTypes = {
   menu: MenuTypes[];
 };
 
+export type ShopWithLocation = ShopTypes & {
+  latitude: number;
+  longitude: number;
+};
+
 export type CategoryFilterTypes = {
   id: number;
   name: string;
