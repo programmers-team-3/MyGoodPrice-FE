@@ -1,11 +1,35 @@
-import { create } from 'zustand';
+import { UserTypes } from "@/types";
+import { create } from "zustand";
 
-const useUserStore = create((set) => ({
-  userInfo: {}, // id, name, token ...
+type userState = {
+  userInfo: UserTypes;
+  loading: boolean;
+  setUserInfo: (newInfo: Partial<userState["userInfo"]>) => void;
+  setLoading: (isLoading: boolean) => void;
+};
 
-  // setUserInfo
-  // getUserInfo
-  // ...
+const useUserStore = create<userState>((set) => ({
+  userInfo: {
+    id: "",
+    name: "",
+    token: "",
+    likes: [],
+    location: {
+      latitude: "",
+      longitude: "",
+    },
+  },
+
+  loading: false,
+
+  setUserInfo: (newInfo) =>
+    set((state) => ({
+      userInfo: {
+        ...state.userInfo,
+        ...newInfo,
+      },
+    })),
+  setLoading: (isLoading) => set(() => ({ loading: isLoading })),
 }));
 
 export default useUserStore;

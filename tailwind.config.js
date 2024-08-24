@@ -19,6 +19,10 @@ export default {
       padding: {
         footer: "8vh",
       },
+      width: {
+        th: "30%",
+        like: "10%",
+      },
       blur: {
         xs: "2px",
       },
