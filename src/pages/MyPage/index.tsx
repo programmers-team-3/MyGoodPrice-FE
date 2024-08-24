@@ -9,6 +9,8 @@ import LocationBox from "@/components/AddressBox/AddressBox";
 import SaveAddress from "@/components/AddressBox/SaveAddress";
 import { AddressTypes } from "@/types";
 import { Address } from "react-daum-postcode";
+import useGeoLocation from "@/store/useGeoLocation";
+import { CiCircleCheck } from "react-icons/ci";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -82,6 +84,8 @@ const MyPage = () => {
       )
     );
   };
+  const { latitude, longitude } = useGeoLocation();
+
   return (
     <div
       className={`h-full w-full flex flex-col py-4 m-4
@@ -99,13 +103,7 @@ const MyPage = () => {
       </div>
       <div className="flex flex-col gap-4">
         <div className="relative flex flex-row items-center justify-between py-2 border-b-2">
-          <p className="text-xl font-bold  text-mainColor w-[25%]">
-            위치 저장
-          </p>
-          {/* <AiOutlinePlus
-            className="absolute w-6 h-6 -translate-y-1/2 cursor-pointer top-1/2 right-2"
-            onClick={() => setOpen(true)}
-          /> */}
+          <p className="text-xl font-bold  text-mainColor w-[25%]">위치 저장</p>
           <LocationBox handleAddress={(address) => addAddress(address)} />
         </div>
         {addresses.length ? (
@@ -114,6 +112,11 @@ const MyPage = () => {
             handleDeleteAddress={deleteAddress}
             handleMainChangeAddress={changeMainAddress}
           />
+        ) : latitude && longitude ? (
+          <div className="flex items-center ">
+            <CiCircleCheck className="mr-1" />
+            <p>위치 등록 완료!</p>
+          </div>
         ) : (
           <p>등록된 주소가 없습니다.</p>
         )}
@@ -144,11 +147,6 @@ const MyPage = () => {
         name="내가 찜한 가게 분석하기"
         handleSetCurrent={moveAnalyze}
       />
-      {/* {open && (
-        <Modal isOpen={open} setOpen={setOpen} isReset={false}>
-          <LocationBox handleAddress={(address) => addAddress(address)} />
-        </Modal>
-      )} */}
     </div>
   );
 };

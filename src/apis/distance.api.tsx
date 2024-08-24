@@ -1,22 +1,5 @@
 import axios from "axios";
 
-// interface MenuItem {
-//   id: number;
-//   menu: string;
-//   price: number;
-// }
-
-// interface LocationResponse {
-//   name: string;
-//   state: string;
-//   city: string;
-//   category: string;
-//   address: string;
-//   tel: string;
-//   menu: MenuItem[];
-//   likes: number;
-// }
-
 const API_BASE_URL = import.meta.env.VITE_PRODUCTION_API_BASE_URL;
 
 export const fetchDistanceData = async (
