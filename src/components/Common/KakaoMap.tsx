@@ -1,7 +1,4 @@
-import useGeoLocation from "@/store/useGeoLocation";
 import { useEffect, useRef, useState } from "react";
-import { getCurrentLocation } from "@/utils/getCurLocation";
-import { useNavigate } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -13,38 +10,24 @@ interface MarkerData {
   id: string;
   name: string;
   address: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
 }
 
-const KakaoMap = ({ markers }: { markers: MarkerData[] }) => {
+const KakaoMap = ({
+  markers,
+  latitude,
+  longitude,
+}: {
+  markers: MarkerData[];
+  latitude: number;
+  longitude: number;
+}) => {
   const mapRef = useRef<any>(null);
-  const navigate = useNavigate();
   const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
 
   const clickImage = "/activePin.svg";
   const defaultImage = "/pin.svg";
-
-  const { latitude, longitude, setGeoLocation } = useGeoLocation((state) => ({
-    latitude: state.latitude,
-    longitude: state.longitude,
-    setGeoLocation: state.setGeoLocation,
-  }));
-
-  // 위치 정보 가져오기
-  const fetchLocation = async () => {
-    if (!latitude || !longitude) {
-      try {
-        await getCurrentLocation(setGeoLocation);
-      } catch (error) {
-        alert("위치정보가 없으면 사용할 수 없는 서비스입니다. 동의해주세요!");
-        navigate("/");
-      }
-    }
-  };
-  useEffect(() => {
-    fetchLocation();
-  }, [latitude, longitude, setGeoLocation]);
 
   // 지도 초기화
   const initMap = () => {
@@ -113,7 +96,7 @@ const KakaoMap = ({ markers }: { markers: MarkerData[] }) => {
       );
 
       const markerImage = new window.kakao.maps.MarkerImage(
-        defaultImage,
+        selectedMarkerId ? clickImage : defaultImage,
         new window.kakao.maps.Size(24, 35)
       );
       const dataMarker = new window.kakao.maps.Marker({
