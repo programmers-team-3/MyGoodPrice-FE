@@ -1,9 +1,9 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface GeoLocationState {
   latitude: number | null;
   longitude: number | null;
-  setGeoLocation: (latitude: number, longitude: number) => void;
+  setGeoLocation: (latitude: number | null, longitude: number | null) => void;
 }
 
 const useGeoLocation = create<GeoLocationState>((set) => ({

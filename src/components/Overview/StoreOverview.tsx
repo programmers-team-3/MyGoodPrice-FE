@@ -98,8 +98,8 @@ export default function StoreOverview({
   };
 
   return (
-    <div className="overflow-y-scroll p-0 flex flex-col items-center">
-      {data === null ? (
+    <div className="flex flex-col items-center p-0 overflow-y-scroll">
+      {currentShopData === null ? (
         <p className="font-bold text-mainDarkColor">
           필터 혹은 검색하여 원하는 가게를 찾아보세요.
         </p>
@@ -109,7 +109,9 @@ export default function StoreOverview({
         </p>
       ) : (
         <>
-          <table className="max-w-4xl mx-auto min-w-full bg-white border border-subDarkColor">
+          <table
+            className="max-w-4xl min-w-full mx-auto bg-white border border-subDarkColor"
+          >
             <thead>
               <tr className="w-full text-mainColor bg-mainBrighterColor">
                 {attributes.map((attribute) => (

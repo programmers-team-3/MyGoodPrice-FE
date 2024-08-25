@@ -7,6 +7,7 @@ import Login from "@/pages/Login";
 import MyPage from "@/pages/MyPage";
 import MapPage from "@/pages/Map/Map";
 import Auth from "@/pages/Auth";
+import LikeAnalyze from "@/pages/MyPage/likeAnalyze";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "/mypage",
         element: <MyPage />,
+      },
+      {
+        path: "/mypage/analyze",
+        element: <LikeAnalyze />,
       },
       {
         path: "/auth",
