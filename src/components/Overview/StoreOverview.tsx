@@ -111,7 +111,7 @@ export default function StoreOverview({
         <>
           <table className="max-w-4xl mx-auto min-w-full bg-white border border-subDarkColor">
             <thead>
-              <tr className="text-mainColor bg-mainBrighterColor w-full">
+              <tr className="w-full text-mainColor bg-mainBrighterColor">
                 {attributes.map((attribute) => (
                   <th
                     key={attribute.id}
@@ -123,7 +123,7 @@ export default function StoreOverview({
                   >
                     {attribute.isSorting !== null ? (
                       <div
-                        className="flex justify-center items-center cursor-pointer hover:underline underline-offset-2"
+                        className="flex items-center justify-center cursor-pointer hover:underline underline-offset-2"
                         onClick={() => sortData(attribute.isSorting)}
                       >
                         <p>{attribute.name}</p>
@@ -145,7 +145,7 @@ export default function StoreOverview({
                 <tr>
                   <td
                     colSpan={4}
-                    className="py-4 text-center text-mainDarkColor font-bold"
+                    className="py-4 font-bold text-center text-mainDarkColor"
                   >
                     카테고리에 속한 가게가 없습니다.
                   </td>
@@ -164,20 +164,20 @@ export default function StoreOverview({
                             setCurrent(shop.id === current ? null : shop.id)
                           }
                         >
-                          <td className="py-2 px-1 border-b text-center">
+                          <td className="px-1 py-2 text-center border-b">
                             {shop.name}
                           </td>
-                          <td className="py-2 px-1 border-b text-center">
+                          <td className="px-1 py-2 text-center border-b">
                             {shop.state} {shop.city}
                           </td>
-                          <td className="py-2 px-1 border-b whitespace-nowrap text-center">
+                          <td className="px-1 py-2 text-center border-b whitespace-nowrap">
                             {shop.category}
                           </td>
                           <td
                             className="border-b"
                             onClick={(e) => toggleLikes(e, shop.id)}
                           >
-                            <span className="flex justify-center items-center gap-1">
+                            <span className="flex items-center justify-center gap-1">
                               {userInfo.likes.includes(shop.id) ? (
                                 <FcLike />
                               ) : (
@@ -191,13 +191,13 @@ export default function StoreOverview({
                           <tr>
                             <td
                               colSpan={4}
-                              className="py-2 px-4 border-b bg-mainBrighterColor"
+                              className="px-4 py-2 border-b bg-mainBrighterColor"
                               onClick={() => navigate(`/shop?id=${shop.id}`)}
                             >
                               <p>Address: {shop.address}</p>
                               <p>Tel: {shop.tel}</p>
                               <p>Menu:</p>
-                              <ul className="list-disc pl-5">
+                              <ul className="pl-5 list-disc">
                                 {shop.menu.map((item) => (
                                   <li key={item.id}>
                                     {item.menu} - {item.price}원
@@ -218,7 +218,7 @@ export default function StoreOverview({
           <div>
             {!currentFilter.isEnd && pageType === "main" && (
               <MdKeyboardDoubleArrowDown
-                className="w-10 h-10 text-subColor cursor-pointer mt-2"
+                className="w-10 h-10 mt-2 cursor-pointer text-subColor"
                 onClick={handleSearchAddShop}
               />
             )}

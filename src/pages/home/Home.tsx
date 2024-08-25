@@ -4,11 +4,9 @@ import Loading from "@/components/Loading/LoadingBar";
 import StoreOverview from "@/components/Overview/StoreOverview";
 import { IoFilter } from "react-icons/io5";
 import { GrPowerReset } from "react-icons/gr";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "@/components/Layout/ModalLayout";
 import FilterBox from "@/components/FilterBox/FilterBox";
-import useGeoLocation from "@/store/useGeoLocation";
-import { getCurrentLocation } from "@/utils/getCurLocation";
 import useShopStore from "@/store/useShopStore";
 import useUserStore from "@/store/useUserStore";
 import axios from "axios";
@@ -19,20 +17,6 @@ export default function Home() {
   const { loading, setLoading } = useUserStore();
   const [current, setCurrent] = useState<string>("전체");
   const [open, setOpen] = useState<boolean>(false);
-
-  const setGeoLocation = useGeoLocation((state) => state.setGeoLocation);
-
-  useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        await getCurrentLocation(setGeoLocation);
-      } catch (error) {
-        console.error("위치 정보를 가져오는 데 오류가 발생했습니다.", error);
-      }
-    };
-
-    fetchLocation();
-  }, [setGeoLocation]);
 
   // [API] ('/shop') : 검색
   const searchShop = async () => {
@@ -85,10 +69,9 @@ export default function Home() {
       justify-start`}
     >
       {loading && <Loading text="가게 찾는 중.." />}
-      <div className="flex gap-8 justify-between items-center">
+      <div className="flex items-center justify-between gap-8">
         <GrPowerReset
-          className="w-8 h-8 text-subColor
-      transition duration-300 hover:text-subDarkColor cursor-pointer"
+          className="w-8 h-8 transition duration-300 cursor-pointer text-subColor hover:text-subDarkColor"
           onClick={() => resetShop()}
         />
         <div className="flex gap-4 overflow-x-scroll">

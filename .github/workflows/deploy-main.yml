@@ -1,0 +1,39 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: startartart/mygoodprice-fe
+          stage: main
+          yaml: |
+            name: mygoodprice-fe
+            app: web
+            options:
+              nodeversion: "21"
+              spa: true
+              buildenv: 
+                - VITE_KAKAO_REST_API_KEY: ${{ secrets.VITE_KAKAO_REST_API_KEY }}
+                - VITE_LOGIN_REDIRECT_URL: ${{ secrets.VITE_LOGIN_REDIRECT_URL }}
+                - VITE_KAKAOMAP_JAVASCRIPT_APP_KEY: ${{ secrets.VITE_KAKAOMAP_JAVASCRIPT_APP_KEY }}
+                - VITE_PRODUCTION_API_BASE_URL: ${{ secrets.VITE_PRODUCTION_API_BASE_URL }}
+              rewrites: []
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
+              preset: react-vite

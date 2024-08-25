@@ -126,6 +126,8 @@ const MyPage = () => {
       )
     );
   };
+  const { latitude, longitude } = useGeoLocation();
+
   return (
     <div
       className={`h-full w-full flex flex-col py-4 m-4
@@ -156,6 +158,11 @@ const MyPage = () => {
             handleDeleteAddress={deleteAddress}
             handleMainChangeAddress={changeMainAddress}
           />
+        ) : latitude && longitude ? (
+          <div className="flex items-center ">
+            <CiCircleCheck className="mr-1" />
+            <p>위치 등록 완료!</p>
+          </div>
         ) : (
           <p>등록된 주소가 없습니다.</p>
         )}
@@ -186,11 +193,6 @@ const MyPage = () => {
         name="내가 찜한 가게 분석하기"
         handleSetCurrent={moveAnalyze}
       />
-      {/* {open && (
-        <Modal isOpen={open} setOpen={setOpen} isReset={false}>
-          <LocationBox handleAddress={(address) => addAddress(address)} />
-        </Modal>
-      )} */}
     </div>
   );
 };
