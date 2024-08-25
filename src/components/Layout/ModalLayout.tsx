@@ -47,7 +47,10 @@ export default function Modal({
   return createPortal(
     <ModalLayout className="fixed top-0 z-10 flex flex-col w-1/2 translate-x-1/2 right-1/2">
       {isOpen ? (
-        <MobileLayout className="relative h-full p-2 mx-6 border-2 border-subDarkColor bg-mainBrightColor rounded-xl opacity-9">
+        <MobileLayout
+          className="relative h-full p-2 mx-6
+        border-y-2 border-subDarkColor"
+        >
           <div
             className="absolute flex items-center gap-2 cursor-pointer left-2 top-4"
             onClick={() => handleReset()}
@@ -63,7 +66,7 @@ export default function Modal({
             className="absolute right-0 w-16 h-16 cursor-pointer"
             onClick={() => setOpen(false)}
           />
-          <div className="h-full mt-header pb-footer">{children}</div>
+          <div className="h-full mt-header pb-footer px-[2vw]">{children}</div>
         </MobileLayout>
       ) : null}
     </ModalLayout>,
@@ -73,11 +76,11 @@ export default function Modal({
 
 const ModalLayout = styled.div`
   margin: 18vh 0 20vh 0;
-  padding: 0 8vh;
+  padding: 0 4vw;
   height: 62vh;
   @media (max-width: 768px) {
     width: 80%;
-    padding: 0 2vh;
+    padding: 0 2vw;
     margin: 20vh 0 22vh 0;
     height: 58vh;
   }
