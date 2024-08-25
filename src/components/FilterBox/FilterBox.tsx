@@ -63,7 +63,7 @@ export default function FilterBox({ rtl, handleCloseModal }: FilterBoxProps) {
 
     try {
       setLoading(true);
-      const res = await axios.get(url);
+      const res = await axios.get(url, { withCredentials: true });
       console.log(res);
       setCurrentShopData(res.data);
       setFilter({
