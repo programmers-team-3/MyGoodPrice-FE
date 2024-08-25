@@ -52,12 +52,6 @@ export type FilterTypes = {
   isEnd: boolean;
 };
 
-export type AddressTypes = {
-  id: string;
-  name: string;
-  isMain: boolean;
-};
-
 export type AttributeType = {
   id: number;
   name: string;

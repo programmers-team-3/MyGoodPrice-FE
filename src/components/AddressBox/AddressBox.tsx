@@ -1,27 +1,19 @@
-import { useEffect, useState } from "react";
-import DaumPostcode, { Address } from "react-daum-postcode";
 import Button from "../Button/Button";
 import useGeoLocation from "@/store/useGeoLocation";
 import { getCurrentLocation } from "@/utils/getCurLocation";
 
+declare global {
+  interface Window {
+    daum: any;
+  }
+}
+
 type AddressBoxProps = {
-  handleAddress: (address: Address) => void;
+  handleAddress: (address: string) => void;
 };
 
-type roleTypes = "currentPosition" | "search" | null;
-
 export default function AddressBox({ handleAddress }: AddressBoxProps) {
-  const [role, setRole] = useState<roleTypes>(null);
-  const completeHandler = (data: Address) => {
-    handleAddress(data);
-    console.log(data);
-  };
-
   const { latitude, longitude, setGeoLocation } = useGeoLocation();
-
-  useEffect(() => {
-    console.log(role);
-  }, [role]);
 
   const handleCurrentLocationButtonClick = async () => {
     try {
@@ -32,35 +24,59 @@ export default function AddressBox({ handleAddress }: AddressBoxProps) {
     }
   };
 
+  const openPostcodePopup = () => {
+    new window.daum.Postcode({
+      oncomplete: function (data: any) {
+        const fullAddress = data.roadAddress;
+        const siDo = data.sido;
+        const siGunGu = data.sigungu;
+        const roadNameAddress = data.roadAddress;
+
+        const geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.addressSearch(
+          fullAddress,
+          function (result: any, status: any) {
+            if (status === window.kakao.maps.services.Status.OK) {
+              const addressLat = parseFloat(result[0].y);
+              const addressLong = parseFloat(result[0].x);
+
+              // 데이터 객체를 생성하여 handleAddress로 전달합니다.
+              const addressData = {
+                fullAddress,
+                siDo,
+                siGunGu,
+                roadNameAddress,
+                latitude: addressLat,
+                longitude: addressLong,
+              };
+
+              handleAddress(addressData.fullAddress); // handleAddress 호출
+              setGeoLocation(addressData.latitude, addressData.longitude);
+            }
+          }
+        );
+      },
+    }).open();
+  };
+
   return (
     <div className="right-0 w-[60%] ">
-      {role === null && (
-        <div className="flex flex-row justify-end gap-4 mx-auto">
-          <Button
-            isActive={latitude && longitude ? false : true}
-            name={
-              latitude && longitude
-                ? "다시 위치정보 받기"
-                : "현재 위치정보 받기"
-            }
-            size="small"
-            handleSetCurrent={handleCurrentLocationButtonClick}
-          />
-          <Button
-            isActive={true}
-            name="주소 검색하기"
-            size="small"
-            handleSetCurrent={() => setRole("search")}
-          />
-        </div>
-      )}
-
-      {role === "search" && (
-        <DaumPostcode
-          onComplete={completeHandler}
-          style={{ height: "100%", padding: 0 }}
+      <div className="flex flex-row justify-end gap-4 mx-auto">
+        <Button
+          isActive={latitude && longitude ? false : true}
+          name={
+            latitude && longitude ? "다시 위치정보 받기" : "현재 위치정보 받기"
+          }
+          size="small"
+          handleSetCurrent={handleCurrentLocationButtonClick}
         />
-      )}
+        <Button
+          isActive={true}
+          name="주소 검색하기"
+          size="small"
+          handleSetCurrent={openPostcodePopup}
+        />
+      </div>
     </div>
   );
 }
