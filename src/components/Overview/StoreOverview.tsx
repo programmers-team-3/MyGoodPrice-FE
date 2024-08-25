@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment, MouseEvent } from "react";
+import { useState, Fragment, MouseEvent } from "react";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { PiCaretUpDownLight } from "react-icons/pi";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
