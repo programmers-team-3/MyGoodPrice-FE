@@ -7,7 +7,7 @@ import { ShopTypes } from "@/types";
 import useUserStore from "@/store/useUserStore";
 import { Review } from "@/components/Review/Review";
 import Loading from "@/components/Loading/LoadingBar";
-
+import { PiCurrencyKrwBold } from "react-icons/pi";
 import { PiCurrencyKrwFill } from "react-icons/pi";
 import { BsTelephone } from "react-icons/bs";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -32,7 +32,8 @@ export default function ShopPage() {
           const url = `${
             import.meta.env.VITE_PRODUCTION_API_BASE_URL
           }/stores/${id}`;
-          const response = await axios.get(url);
+          const response = await axios.get(url, { withCredentials: true });
+          console.log(response);
           setShopData(response.data);
           setLoading(false);
         } catch (error) {

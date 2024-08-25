@@ -1,5 +1,5 @@
 export type UserTypes = {
-  id: string;
+  id: number | null;
   name: string;
   token: string;
   likes: string[];

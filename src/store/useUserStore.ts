@@ -10,10 +10,10 @@ type userState = {
 
 const useUserStore = create<userState>((set) => ({
   userInfo: {
-    id: "",
+    id: null,
     name: "",
     token: "",
-    likes: [],
+    likes: JSON.parse(localStorage.getItem("likes") || "[]") as string[],
     location: {
       latitude: "",
       longitude: "",

@@ -1,4 +1,4 @@
-import { useState, Fragment, MouseEvent } from "react";
+import { useState, useEffect, Fragment, MouseEvent } from "react";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { PiCaretUpDownLight } from "react-icons/pi";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
@@ -12,6 +12,7 @@ import { filterSearchCriteria } from "@/utils/filterSearchCriteria";
 type StoreOverviewProps = {
   attributes?: AttributeType[];
   currentCategory?: string;
+  pageType?: "main" | "my";
 };
 
 export default function StoreOverview({
@@ -22,35 +23,49 @@ export default function StoreOverview({
     { id: 4, name: "찜", isSorting: "likes" },
   ],
   currentCategory = "전체",
+  pageType,
 }: StoreOverviewProps) {
   const {
     currentFilter,
     currentShopData,
+    myShopData,
     toggleLikeShop,
     sortData,
     setFilter,
     setCurrentShopData,
+    setMyShopData,
   } = useShopStore();
   const { userInfo, setUserInfo } = useUserStore();
   const [current, setCurrent] = useState<string | null>(null);
   const { setLoading } = useUserStore();
   const navigate = useNavigate();
 
-  const toggleLikes = (e: MouseEvent, id: string) => {
-    e.stopPropagation();
-    if (userInfo.likes.includes(id)) {
-      setUserInfo({
-        likes: userInfo.likes.filter((likeId) => likeId !== id),
-      });
-      toggleLikeShop(id, true);
-    } else {
-      setUserInfo({
-        likes: [...userInfo.likes, id],
-      });
-      toggleLikeShop(id, false);
-    }
+  const data = pageType === "main" ? currentShopData : myShopData;
+  const setData = pageType === "main" ? setCurrentShopData : setMyShopData;
 
-    // [API]('/likes')
+  const toggleLikes = async (e: MouseEvent, id: string) => {
+    e.stopPropagation();
+    const url = `${import.meta.env.VITE_PRODUCTION_API_BASE_URL}/likes`;
+    let storedLikes = localStorage.getItem("likes");
+    let likesArray: string[] = storedLikes ? JSON.parse(storedLikes) : [];
+
+    if (userInfo.likes.includes(id)) {
+      await axios.delete(url, { data: { storeId: id }, withCredentials: true });
+      const updatedLikes = userInfo.likes.filter((likeId) => likeId !== id);
+      setUserInfo({ likes: updatedLikes });
+      toggleLikeShop(id, true);
+
+      likesArray = likesArray.filter((likeId) => likeId !== id);
+      localStorage.setItem("likes", JSON.stringify(likesArray));
+    } else {
+      await axios.post(url, { storeId: id });
+      toggleLikeShop(id, false);
+      const updatedLikes = [...userInfo.likes, id];
+      setUserInfo({ likes: updatedLikes });
+
+      likesArray.push(id);
+      localStorage.setItem("likes", JSON.stringify(likesArray));
+    }
   };
 
   // [API] ('/shop') : 페이지네이션
@@ -69,14 +84,13 @@ export default function StoreOverview({
 
     try {
       setLoading(true);
-      const res = await axios.get(url);
-      console.log(res);
+      const res = await axios.get(url, { withCredentials: true });
       setFilter({
         ...currentFilter,
         page: nextPage,
         isEnd: res.data.length !== currentFilter.limit,
       });
-      setCurrentShopData([...(currentShopData as ShopTypes[]), ...res.data]);
+      setData([...(data as ShopTypes[]), ...res.data]);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -84,20 +98,18 @@ export default function StoreOverview({
   };
 
   return (
-    <div className="flex flex-col items-center p-0 overflow-y-scroll">
-      {currentShopData === null ? (
+    <div className="overflow-y-scroll p-0 flex flex-col items-center">
+      {data === null ? (
         <p className="font-bold text-mainDarkColor">
           필터 혹은 검색하여 원하는 가게를 찾아보세요.
         </p>
-      ) : currentShopData.length === 0 ? (
+      ) : data.length === 0 ? (
         <p className="font-bold text-mainDarkColor">
           필터링 된 가게가 존재하지 않습니다.
         </p>
       ) : (
         <>
-          <table
-            className="max-w-4xl min-w-full mx-auto bg-white border border-subDarkColor"
-          >
+          <table className="max-w-4xl mx-auto min-w-full bg-white border border-subDarkColor">
             <thead>
               <tr className="w-full text-mainColor bg-mainBrighterColor">
                 {attributes.map((attribute) => (
@@ -125,7 +137,7 @@ export default function StoreOverview({
               </tr>
             </thead>
             <tbody>
-              {currentShopData?.filter(
+              {data?.filter(
                 (shop) =>
                   currentCategory === "전체" ||
                   currentCategory === shop.category
@@ -139,7 +151,7 @@ export default function StoreOverview({
                   </td>
                 </tr>
               ) : (
-                currentShopData?.map((shop) => {
+                data?.map((shop) => {
                   if (
                     currentCategory === "전체" ||
                     currentCategory === shop.category
@@ -204,7 +216,7 @@ export default function StoreOverview({
             </tbody>
           </table>
           <div>
-            {!currentFilter.isEnd && (
+            {!currentFilter.isEnd && pageType === "main" && (
               <MdKeyboardDoubleArrowDown
                 className="w-10 h-10 mt-2 cursor-pointer text-subColor"
                 onClick={handleSearchAddShop}

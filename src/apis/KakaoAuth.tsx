@@ -18,16 +18,17 @@ const KakaoAuth = () => {
         },
         {
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         }
       )
       .then((res) => {
         localStorage.setItem("token", res.data.access_token);
+        console.log(res);
         navigate("/mypage");
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error 발생", error);
       });
   }, [CODE, GRANT_TYPE, navigate]);
 

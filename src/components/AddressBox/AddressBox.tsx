@@ -58,7 +58,16 @@ export default function AddressBox({ handleAddress }: AddressBoxProps) {
       {role === "search" && (
         <DaumPostcode
           onComplete={completeHandler}
-          style={{ height: "100%", padding: 0 }}
+          style={{
+            position: "fixed",
+            width: "45%",
+            height: "50%",
+            padding: 0,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 100,
+          }}
         />
       )}
     </div>

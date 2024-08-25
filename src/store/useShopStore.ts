@@ -4,12 +4,14 @@ import { create } from "zustand";
 type shopState = {
   categoryFilter: CategoryFilterTypes[];
   currentShopData: ShopTypes[] | null;
+  myShopData: ShopTypes[] | null;
   currentFilter: FilterTypes;
   sorting: {
     method: "likes" | "lexical" | "location" | null;
     isAscending: boolean;
   } | null;
   setCurrentShopData: (shopData: ShopTypes[] | null) => void;
+  setMyShopData: (shopData: ShopTypes[] | null) => void;
   setFilter: (filter: Partial<shopState["currentFilter"]>) => void;
   toggleLikeShop: (shopId: string, isLiked: boolean) => void;
   sortData: (method: "likes" | "lexical" | "location" | null) => void;
@@ -26,6 +28,8 @@ const useShopStore = create<shopState>((set) => ({
   ],
   currentShopData: null,
 
+  myShopData: null,
+  
   currentFilter: {
     input: "",
     minPrice: 0,
@@ -46,6 +50,9 @@ const useShopStore = create<shopState>((set) => ({
   setCurrentShopData: (shopData) =>
     set((state) => ({ ...state, currentShopData: shopData })),
 
+  setMyShopData: (shopData) =>
+    set((state) => ({ ...state, myShopData: shopData })),
+
   setFilter: (filter) =>
     set((state) => ({
       currentFilter: {
@@ -56,8 +63,9 @@ const useShopStore = create<shopState>((set) => ({
 
   toggleLikeShop: (id, isLiked) =>
     set((state) => {
-      const updatedShops = state.currentShopData as ShopTypes[];
-      updatedShops.map((shop) => {
+      if (!state.currentShopData) return state;
+
+      const updatedShops = state.currentShopData.map((shop) => {
         if (shop.id === id) {
           const currentLikes = shop.likes ?? 0;
           return {
@@ -67,6 +75,7 @@ const useShopStore = create<shopState>((set) => ({
         }
         return shop;
       });
+
       return { currentShopData: updatedShops };
     }),
 
