@@ -11,6 +11,8 @@ import { AddressTypes } from "@/types";
 import { Address } from "react-daum-postcode";
 import useUserStore from "@/store/useUserStore";
 import useShopStore from "@/store/useShopStore";
+import useGeoLocation from "@/store/useGeoLocation";
+import { CiCircleCheck } from "react-icons/ci";
 
 const MyPage = () => {
   const navigate = useNavigate();
