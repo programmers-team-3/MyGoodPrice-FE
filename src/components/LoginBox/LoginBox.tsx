@@ -1,5 +1,6 @@
 import { useState } from "react";
 import KakaoLogin from "@/assets/imgs/Kakaologin.png";
+// import GoogleLogin from "@/assets/imgs/GoogleLogin.png";
 import { LiaEyeSolid, LiaEyeSlashSolid } from "react-icons/lia";
 
 export default function LoginBox() {
@@ -11,15 +12,18 @@ export default function LoginBox() {
     updatedValues[idx] = value;
     setValues(updatedValues);
   };
-  const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${
-    import.meta.env.VITE_KAKAO_REST_API_KEY
-  }&redirect_uri=${import.meta.env.VITE_LOGIN_REDIRECT_URL}`;
+
   const handleLogin = () => {
+    const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${
+      import.meta.env.VITE_KAKAO_REST_API_KEY
+    }&redirect_uri=${import.meta.env.VITE_LOGIN_REDIRECT_URL}`;
+
     window.location.href = url;
   };
+
   return (
-    <div className="flex flex-col gap-4 p-2">
-      <div>
+    <div className="flex flex-col gap-4 p-2 items-center">
+      <>
         <input
           className="w-full p-2 border rounded appearance-none"
           value={values[0]}
@@ -27,8 +31,8 @@ export default function LoginBox() {
           placeholder="아이디"
           onChange={(e) => handleChange(0, e.target.value)}
         />
-      </div>
-      <div className="relative">
+      </>
+      <div className="relative w-full">
         <input
           className="w-full p-2 border rounded appearance-none"
           value={values[1]}
@@ -57,6 +61,13 @@ export default function LoginBox() {
         className="w-full h-16 cursor-pointer"
         onClick={handleLogin}
       />
+      {/* <img
+        src={GoogleLogin}
+        alt="googleLogin"
+        className="w-full h-20 cursor-pointer"
+        onClick={handleLogin()}
+      /> */}
+
       <p className="text-center underline cursor-pointer text-subDarkColor">
         회원가입
       </p>

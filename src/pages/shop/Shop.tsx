@@ -7,7 +7,6 @@ import { ShopTypes } from "@/types";
 import useUserStore from "@/store/useUserStore";
 import { Review } from "@/components/Review/Review";
 import Loading from "@/components/Loading/LoadingBar";
-
 import { PiCurrencyKrwFill } from "react-icons/pi";
 import { BsTelephone } from "react-icons/bs";
 import { BiCategoryAlt } from "react-icons/bi";
