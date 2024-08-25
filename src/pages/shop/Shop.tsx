@@ -59,7 +59,7 @@ export default function ShopPage() {
   if (loading) return <Loading text="가게 정보 불러오는 중.." />;
 
   return (
-    <div className="top-0 w-full h-full overflow-y-auto">
+    <div className="top-0 w-full h-full overflow-y-scroll">
       <div
         className={`flex flex-col items-start justify-between w-full px-5 pt-5 mx-auto mt-5 `}
         style={{
