@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment, MouseEvent } from "react";
+import { useState, Fragment, MouseEvent } from "react";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { PiCaretUpDownLight } from "react-icons/pi";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
@@ -99,7 +99,7 @@ export default function StoreOverview({
 
   return (
     <div className="flex flex-col items-center p-0 overflow-y-scroll">
-      {currentShopData === null ? (
+      {data === null ? (
         <p className="font-bold text-mainDarkColor">
           필터 혹은 검색하여 원하는 가게를 찾아보세요.
         </p>
@@ -190,13 +190,9 @@ export default function StoreOverview({
                         {current === shop.id && (
                           <tr>
                             <td
-                              colSpan={4}
+                              colSpan={2}
                               className="px-4 py-2 border-b bg-mainBrighterColor"
-                              onClick={() => navigate(`/shop?id=${shop.id}`)}
                             >
-                              <p>Address: {shop.address}</p>
-                              <p>Tel: {shop.tel}</p>
-                              <p>Menu:</p>
                               <ul className="pl-5 list-disc">
                                 {shop.menu.map((item) => (
                                   <li key={item.id}>
@@ -204,6 +200,16 @@ export default function StoreOverview({
                                   </li>
                                 ))}
                               </ul>
+                            </td>
+                            <td
+                              colSpan={2}
+                              className="px-4 py-2 border-l border-b 
+                              focus:outline-none transition duration-300 bg-mainColor hover:bg-mainDarkColor"
+                              onClick={() => navigate(`/shop?id=${shop.id}`)}
+                            >
+                              <p className="text-mainBrighterColor text-xl font-bold">
+                                해당 가게로 이동
+                              </p>
                             </td>
                           </tr>
                         )}
