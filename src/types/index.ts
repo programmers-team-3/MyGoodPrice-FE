@@ -1,5 +1,5 @@
 export type UserTypes = {
-  id: string;
+  id: number | null;
   name: string;
   token: string;
   likes: string[];
@@ -50,12 +50,6 @@ export type FilterTypes = {
   page: number | null;
   limit: number;
   isEnd: boolean;
-};
-
-export type AddressTypes = {
-  id: string;
-  name: string;
-  isMain: boolean;
 };
 
 export type AttributeType = {
