@@ -2,7 +2,7 @@ import LoginBox from "@/components/LoginBox/LoginBox";
 
 const Login = () => {
   return (
-    <div className="flex w-full mt-16 justify-center">
+    <div className="flex mt-12 justify-center">
       <LoginBox />
     </div>
   );

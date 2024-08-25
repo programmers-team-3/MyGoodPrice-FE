@@ -45,7 +45,7 @@ export default function Home() {
     }`;
     try {
       setLoading(true);
-      const res = await axios.get(url);
+      const res = await axios.get(url, { withCredentials: true });
       console.log(res);
       setCurrentShopData(res.data);
       setFilter({
@@ -119,7 +119,7 @@ export default function Home() {
           })
         }
       />
-      <StoreOverview currentCategory={current} />
+      <StoreOverview currentCategory={current} pageType="main" />
       {open && (
         <Modal isOpen={open} setOpen={setOpen}>
           <FilterBox rtl={false} handleCloseModal={() => setOpen(false)} />

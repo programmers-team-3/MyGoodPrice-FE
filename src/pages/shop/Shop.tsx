@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import useUserStore from "@/store/useUserStore";
 import Loading from "@/components/Loading/LoadingBar";
-  import { PiCurrencyKrwBold } from "react-icons/pi";
+import { PiCurrencyKrwBold } from "react-icons/pi";
 
 export default function ShopPage() {
   const [searchParams] = useSearchParams();
@@ -20,7 +20,7 @@ export default function ShopPage() {
           const url = `${
             import.meta.env.VITE_PRODUCTION_API_BASE_URL
           }/stores/${id}`;
-          const response = await axios.get(url);
+          const response = await axios.get(url, { withCredentials: true });
           console.log(response);
           setShopData(response.data);
           setLoading(false);
@@ -35,9 +35,9 @@ export default function ShopPage() {
   if (loading) return <Loading text="가게 정보 불러오는 중.." />;
 
   return (
-     <div className="w-full h-full text-xl border-2">
+    <div className="w-full h-full text-xl border-2">
       <div className="w-[60%] h-[50%] mt-5 border-2 mx-auto flex items-center justify-center">
-      <div>{shopData ? <div>{shopData.name}</div> : <p>데이터 없음</p>}</div>
+        <div>{shopData ? <div>{shopData.name}</div> : <p>데이터 없음</p>}</div>
         <h1>name</h1>
         <span>address</span>
         <span>category</span>
