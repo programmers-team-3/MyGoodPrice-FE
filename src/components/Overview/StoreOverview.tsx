@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment, MouseEvent } from "react";
+import { useState, Fragment, MouseEvent } from "react";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { PiCaretUpDownLight } from "react-icons/pi";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
@@ -103,15 +103,13 @@ export default function StoreOverview({
         <p className="font-bold text-mainDarkColor">
           필터 혹은 검색하여 원하는 가게를 찾아보세요.
         </p>
-      ) : data.length === 0 ? (
+      ) : data?.length === 0 ? (
         <p className="font-bold text-mainDarkColor">
           필터링 된 가게가 존재하지 않습니다.
         </p>
       ) : (
         <>
-          <table
-            className="max-w-4xl min-w-full mx-auto bg-white border border-subDarkColor"
-          >
+          <table className="max-w-4xl min-w-full mx-auto bg-white border border-subDarkColor">
             <thead>
               <tr className="w-full text-mainColor bg-mainBrighterColor">
                 {attributes.map((attribute) => (

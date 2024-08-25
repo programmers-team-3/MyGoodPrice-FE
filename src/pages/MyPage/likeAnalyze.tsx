@@ -16,7 +16,7 @@ const LikeAnalyze = () => {
     datasets: [
       {
         label: "좋아요 카테고리 분석",
-        data : [30, 20, 25, 25, 10], // API에서 받은 데이터 또는 더미 데이터
+        data: data ? data : [30, 20, 25, 25, 10], // API에서 받은 데이터 또는 더미 데이터
         backgroundColor: [
           "rgba(255, 99, 132, 0.6)",
           "rgba(54, 162, 235, 0.6)",
