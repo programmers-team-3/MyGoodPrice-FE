@@ -10,6 +10,8 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import useShopStore from "@/store/useShopStore";
+import { useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 export default function ShopPage() {
   const [searchParams] = useSearchParams();
