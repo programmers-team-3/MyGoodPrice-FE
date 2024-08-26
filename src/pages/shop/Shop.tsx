@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, MouseEvent } from "react";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
-
 import formatPrice from "@/utils/getUtil";
 import { ShopTypes } from "@/types";
 import useUserStore from "@/store/useUserStore";
@@ -16,8 +15,7 @@ import useShopStore from "@/store/useShopStore";
 
 export default function ShopPage() {
   const [searchParams] = useSearchParams();
-  const [shopData, setShopData] = useState<ShopTypes>();
-
+  const [shopData, setShopData] = useState<ShopTypes | null>(null);
   const { loading, setLoading } = useUserStore();
   const { userInfo, setUserInfo } = useUserStore();
   const { toggleLikeShop } = useShopStore();
@@ -42,17 +40,42 @@ export default function ShopPage() {
     fetchShopData();
   }, [searchParams, setLoading]);
 
-  const useLikes = (id: string) => {
+  const toggleLikes = async (e: MouseEvent, id: string) => {
+    e.stopPropagation();
+    const url = `${import.meta.env.VITE_PRODUCTION_API_BASE_URL}/likes`;
+    let storedLikes = localStorage.getItem("likes");
+    let likesArray: string[] = storedLikes ? JSON.parse(storedLikes) : [];
+
     if (userInfo.likes.includes(id)) {
-      setUserInfo({
-        likes: userInfo.likes.filter((likeId) => likeId !== id),
-      });
+      await axios.delete(url, { data: { storeId: id }, withCredentials: true });
+      const updatedLikes = userInfo.likes.filter((likeId) => likeId !== id);
+      setUserInfo({ likes: updatedLikes });
       toggleLikeShop(id, true);
+
+      likesArray = likesArray.filter((likeId) => likeId !== id);
+      localStorage.setItem("likes", JSON.stringify(likesArray));
+
+      if (shopData) {
+        setShopData({
+          ...shopData,
+          likes: (shopData.likes as number) - 1,
+        });
+      }
     } else {
-      setUserInfo({
-        likes: [...userInfo.likes, id],
-      });
+      await axios.post(url, { storeId: id });
       toggleLikeShop(id, false);
+      const updatedLikes = [...userInfo.likes, id];
+      setUserInfo({ likes: updatedLikes });
+
+      likesArray.push(id);
+      localStorage.setItem("likes", JSON.stringify(likesArray));
+
+      if (shopData) {
+        setShopData({
+          ...shopData,
+          likes: (shopData.likes as number) + 1,
+        });
+      }
     }
   };
 
@@ -63,25 +86,23 @@ export default function ShopPage() {
       <div
         className={`flex flex-col items-start justify-between w-full px-5 pt-5 mx-auto mt-5 `}
         style={{
-          height: `calc(40% + ${shopData?.menu?.length ? shopData.menu.length * 50 : 0}px)`,
+          height: `calc(40% + ${
+            shopData?.menu?.length ? shopData.menu.length * 50 : 0
+          }px)`,
         }}
       >
         <div className="flex items-center justify-between w-full">
           <h1 className="text-2xl font-bold">{shopData?.name}</h1>
           <div
             className="flex flex-col items-center"
-            onClick={() => {
-              if (shopData?.id) {
-                useLikes(shopData.id);
-              }
-            }}
+            onClick={(e) => toggleLikes(e, shopData?.id as string)}
           >
             {shopData && userInfo.likes.includes(shopData.id) ? (
-              <FcLike className="cursor-pointer" />
+              <FcLike className="w-6 h-6 cursor-pointer" />
             ) : (
-              <FcLikePlaceholder className="cursor-pointer" />
+              <FcLikePlaceholder className="w-6 h-6 cursor-pointer" />
             )}
-            <p>{shopData?.likes}</p>
+            <p className="text-lg">{shopData?.likes}</p>
           </div>
         </div>
         <span className="flex items-start">
