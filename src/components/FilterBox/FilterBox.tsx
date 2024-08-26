@@ -17,8 +17,13 @@ const MAX = 10000;
 type FilterBoxProps = {
   rtl: boolean;
   handleCloseModal: () => void;
+  handleCategoryString: (name: string | null) => void;
 };
-export default function FilterBox({ rtl, handleCloseModal }: FilterBoxProps) {
+export default function FilterBox({
+  rtl,
+  handleCloseModal,
+  handleCategoryString,
+}: FilterBoxProps) {
   const { currentFilter, categoryFilter, setFilter, setCurrentShopData } =
     useShopStore();
   const { loading, setLoading } = useUserStore();
@@ -64,7 +69,9 @@ export default function FilterBox({ rtl, handleCloseModal }: FilterBoxProps) {
     try {
       setLoading(true);
       const res = await axios.get(url, { withCredentials: true });
-      console.log(res);
+      if (searchCategory === null || res.data.length === 0)
+        handleCategoryString("전체");
+      else handleCategoryString(searchCategory);
       setCurrentShopData(res.data);
       setFilter({
         ...currentFilter,

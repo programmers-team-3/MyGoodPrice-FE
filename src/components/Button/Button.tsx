@@ -1,11 +1,13 @@
 type ButtonProps = {
   isActive: boolean;
+  isUsed?: boolean;
   size: "small" | "medium" | "large";
   name?: string;
   handleSetCurrent?: () => void;
 };
 export default function Button({
   isActive,
+  isUsed = true,
   size,
   name = "empty",
   handleSetCurrent,
@@ -13,6 +15,8 @@ export default function Button({
   const baseClasses = "focus:outline-none transition duration-300 font-bold";
   const activeClasses = isActive
     ? "bg-mainColor text-mainBrighterColor hover:bg-mainDarkColor"
+    : isUsed
+    ? "bg-mainBrighterColor text-mainColor"
     : "bg-mainBrighterColor text-mainColor hover:bg-mainBrightColor";
 
   const sizeClasses = {
@@ -24,6 +28,7 @@ export default function Button({
   return (
     <button
       className={`${baseClasses} ${activeClasses} ${sizeClasses[size]} whitespace-nowrap`}
+      disabled={!isUsed}
       onClick={handleSetCurrent}
     >
       {name}
