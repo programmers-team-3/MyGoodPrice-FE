@@ -118,7 +118,7 @@ const MapPage = () => {
                 <div
                   key={idx}
                   className="inline-block w-48 min-h-full p-3 mx-2 text-sm font-bold text-gray-600 rounded-lg shadow-2xl bg-mainBrightColor"
-                  onClick={() => navigate(`shop?id=${val.id}`)}
+                  onClick={() => navigate(`/shop?id=${val.id}`)}
                 >
                   <p className="overflow-hidden text-base select-none text-mainDarkColor whitespace-nowrap text-ellipsis">
                     {val.name}
