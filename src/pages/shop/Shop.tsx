@@ -1,6 +1,4 @@
 import { useEffect, useState, MouseEvent } from "react";
-import axios from "axios";
-import { useSearchParams } from "react-router-dom";
 import formatPrice from "@/utils/getUtil";
 import { ShopTypes } from "@/types";
 import useUserStore from "@/store/useUserStore";
@@ -15,7 +13,8 @@ import useShopStore from "@/store/useShopStore";
 
 export default function ShopPage() {
   const [searchParams] = useSearchParams();
-  const [shopData, setShopData] = useState<ShopTypes | null>(null);
+  const [shopData, setShopData] = useState<ShopTypes>();
+
   const { loading, setLoading } = useUserStore();
   const { userInfo, setUserInfo } = useUserStore();
   const { toggleLikeShop } = useShopStore();
