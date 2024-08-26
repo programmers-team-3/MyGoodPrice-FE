@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { getCurrentLocation } from "@/utils/getCurLocation";
 import { useNavigate } from "react-router-dom";
-import useGeoLocation from "@/store/useGeoLocation";
+import useGeoLocation from "@/store/useGeoLocationStore";
 import { fetchDistanceData } from "@/apis/distance.api";
 import { ShopWithLocation } from "@/types";
 import formatPrice from "@/utils/getUtil";
@@ -112,32 +112,36 @@ const MapPage = () => {
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
         >
-          {shopData.map((val, idx) => (
-            <div
-              key={idx}
-              className="inline-block w-48 min-h-full p-3 mx-2 text-sm font-bold text-gray-600 rounded-lg shadow-2xl bg-mainBrightColor"
-              onClick={() => navigate(`shop?id=${val.id}`)}
-            >
-              <p className="overflow-hidden text-base select-none text-mainDarkColor whitespace-nowrap text-ellipsis">
-                {val.name}
-              </p>
-              <p className="overflow-hidden select-none whitespace-nowrap text-ellipsis">
-                {val.address.split(" ").slice(1).join(" ")}
-              </p>
-              <div className="flex justify-between w-full">
-                <p className="w-1/4 select-none">{val.category} -</p>
-                <div className="flex items-center justify-end w-3/4">
-                  <p className="mr-1 overflow-hidden select-none whitespace-nowrap text-ellipsis">
-                    {val.menu[0].menu}
+          {shopData.map((val, idx) => {
+            return (
+              val.menu.length !== 0 && (
+                <div
+                  key={idx}
+                  className="inline-block w-48 min-h-full p-3 mx-2 text-sm font-bold text-gray-600 rounded-lg shadow-2xl bg-mainBrightColor"
+                  onClick={() => navigate(`/shop?id=${val.id}`)}
+                >
+                  <p className="overflow-hidden text-base select-none text-mainDarkColor whitespace-nowrap text-ellipsis">
+                    {val.name}
                   </p>
-                  <p className="w-16 select-none">
-                    {formatPrice(val.menu[0].price)}
+                  <p className="overflow-hidden select-none whitespace-nowrap text-ellipsis">
+                    {val.address.split(" ").slice(1).join(" ")}
                   </p>
+                  <div className="flex justify-between w-full">
+                    <p className="w-1/4 select-none">{val.category} -</p>
+                    <div className="flex items-center justify-end w-3/4">
+                      <p className="mr-1 overflow-hidden select-none whitespace-nowrap text-ellipsis">
+                        {val.menu[0].menu}
+                      </p>
+                      <p className="w-16 select-none">
+                        {formatPrice(val.menu[0].price)}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="select-none">{val.tel ? val.tel : "..."}</p>
                 </div>
-              </div>
-              <p className="select-none">{val.tel ? val.tel : "..."}</p>
-            </div>
-          ))}
+              )
+            );
+          })}
         </div>
       </SlideModal>
 

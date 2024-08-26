@@ -7,7 +7,7 @@ import Button from "@/components/Button/Button";
 import StoreOverview from "@/components/Overview/StoreOverview";
 import LocationBox from "@/components/AddressBox/AddressBox";
 import SaveAddress from "@/components/AddressBox/SaveAddress";
-import useGeoLocation from "@/store/useGeoLocation";
+import useGeoLocation from "@/store/useGeoLocationStore";
 import { CiCircleCheck } from "react-icons/ci";
 import useUserStore from "@/store/useUserStore";
 import useShopStore from "@/store/useShopStore";

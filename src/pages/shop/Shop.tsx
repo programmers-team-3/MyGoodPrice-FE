@@ -82,7 +82,7 @@ export default function ShopPage() {
   if (loading) return <Loading text="가게 정보 불러오는 중.." />;
 
   return (
-    <div className="top-0 w-full h-full overflow-y-auto">
+    <div className="top-0 w-full h-full overflow-y-scroll">
       <div
         className={`flex flex-col items-start justify-between w-full px-5 pt-5 mx-auto mt-5 `}
         style={{
@@ -98,9 +98,9 @@ export default function ShopPage() {
             onClick={(e) => toggleLikes(e, shopData?.id as string)}
           >
             {shopData && userInfo.likes.includes(shopData.id) ? (
-              <FcLike className="cursor-pointer w-6 h-6" />
+              <FcLike className="w-6 h-6 cursor-pointer" />
             ) : (
-              <FcLikePlaceholder className="cursor-pointer w-6 h-6" />
+              <FcLikePlaceholder className="w-6 h-6 cursor-pointer" />
             )}
             <p className="text-lg">{shopData?.likes}</p>
           </div>

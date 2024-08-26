@@ -203,11 +203,10 @@ export default function StoreOverview({
                             </td>
                             <td
                               colSpan={2}
-                              className="px-4 py-2 border-l border-b 
-                              focus:outline-none transition duration-300 bg-mainColor hover:bg-mainDarkColor"
+                              className="px-4 py-2 transition duration-300 border-b border-l focus:outline-none bg-mainColor hover:bg-mainDarkColor"
                               onClick={() => navigate(`/shop?id=${shop.id}`)}
                             >
-                              <p className="text-mainBrighterColor text-xl font-bold">
+                              <p className="text-xl font-bold text-mainBrighterColor">
                                 해당 가게로 이동
                               </p>
                             </td>
