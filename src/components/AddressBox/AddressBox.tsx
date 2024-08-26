@@ -18,7 +18,7 @@ export default function AddressBox({ handleAddress }: AddressBoxProps) {
   const handleCurrentLocationButtonClick = async () => {
     try {
       await getCurrentLocation(setGeoLocation);
-      console.log("위치 정보가 업데이트되었습니다.");
+      // console.log("위치 정보가 업데이트되었습니다.");
     } catch (error) {
       console.error("위치 정보 업데이트에 실패했습니다.", error);
     }

@@ -40,7 +40,7 @@ const MapPage = () => {
     if (latitude && longitude) {
       const data = await fetchDistanceData(longitude, latitude, disId);
       setShopData(data);
-      console.log(shopData);
+      // console.log(shopData);
     }
   };
 

@@ -102,17 +102,17 @@ const KakaoMap = ({
 
       // 마커 클릭 이벤트 설정
       window.kakao.maps.event.addListener(dataMarker, "click", () => {
-        console.log(marker); //9
-        console.log("selectedMarkerId : ", selectedMarkerId); //null
+        // console.log(marker); //9
+        // console.log("selectedMarkerId : ", selectedMarkerId); //null
 
         if (selectedMarkerId !== marker.id) {
           const prevMarkerId = marker.id;
           setSelectedMarkerId(marker.id);
-          console.log("pvev, markerId : ", prevMarkerId, marker.id); // null 9
+          // console.log("pvev, markerId : ", prevMarkerId, marker.id); // null 9
 
           if (prevMarkerId) {
             //selectedMarkerId is null > if 문 실행 안됨
-            console.log("prevMarkerId : ", prevMarkerId); //출력안됨
+            // console.log("prevMarkerId : ", prevMarkerId); //출력안됨
             const prevMarker = markers.find((m) => m.id === prevMarkerId);
             if (prevMarker) {
               const prevPosition = new window.kakao.maps.LatLng(

@@ -81,8 +81,7 @@ const MyPage = () => {
           },
         }
       )
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         localStorage.removeItem("token");
         navigate("/login");
       })

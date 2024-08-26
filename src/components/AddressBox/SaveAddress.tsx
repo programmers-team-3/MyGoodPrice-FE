@@ -9,7 +9,7 @@ export default function SaveAddress({
   address,
   handleDeleteAddress,
 }: SaveAddressProps) {
-  console.log(address);
+  // console.log(address);
 
   return (
     <>
