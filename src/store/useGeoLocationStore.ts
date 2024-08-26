@@ -6,10 +6,10 @@ interface GeoLocationState {
   setGeoLocation: (latitude: number | null, longitude: number | null) => void;
 }
 
-const useGeoLocation = create<GeoLocationState>((set) => ({
+const useGeoLocationStore = create<GeoLocationState>((set) => ({
   latitude: null,
   longitude: null,
   setGeoLocation: (latitude, longitude) => set({ latitude, longitude }),
 }));
 
-export default useGeoLocation;
+export default useGeoLocationStore;

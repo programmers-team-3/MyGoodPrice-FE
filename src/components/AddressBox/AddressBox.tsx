@@ -1,5 +1,5 @@
 import Button from "../Button/Button";
-import useGeoLocation from "@/store/useGeoLocation";
+import useGeoLocation from "@/store/useGeoLocationStore";
 import { getCurrentLocation } from "@/utils/getCurLocation";
 
 declare global {

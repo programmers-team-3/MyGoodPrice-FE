@@ -57,3 +57,13 @@ export type AttributeType = {
   name: string;
   isSorting: "lexical" | "likes" | "location" | null;
 };
+
+export type PieChartType = {
+  category: string;
+  percent: string;
+};
+
+export type TichChartType = {
+  category: string;
+  averagePrice: string;
+};
